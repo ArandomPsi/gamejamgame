@@ -1,0 +1,198 @@
+[gd_scene load_steps=13 format=3 uid="uid://c6accsyd88ny0"]
+
+[ext_resource type="Script" path="res://scripts/title.gd" id="1_2jeu1"]
+[ext_resource type="FontFile" uid="uid://dtmmijkydgvd" path="res://fonts/MolganRegular-YqWj2.otf" id="1_l1mw3"]
+[ext_resource type="Shader" path="res://shaders/fog.gdshader" id="2_cyrau"]
+[ext_resource type="FontFile" uid="uid://b8py65jnbfyky" path="res://fonts/TrenchThin-aZ1J.ttf" id="3_1nyvw"]
+[ext_resource type="Script" path="res://scripts/buttonintro.gd" id="4_llviq"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_frvnh"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yxljt"]
+seamless = true
+noise = SubResource("FastNoiseLite_frvnh")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0h6up"]
+shader = ExtResource("2_cyrau")
+shader_parameter/smoke_color = Color(0.8, 0.8, 0.8, 1)
+shader_parameter/distortion_speed = 0.683
+shader_parameter/density = 0.058
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_yxljt")
+
+[sub_resource type="Environment" id="Environment_d7e1k"]
+background_mode = 3
+background_canvas_max_layer = 1
+glow_enabled = true
+glow_levels/1 = 3.2
+glow_levels/7 = 1.82
+glow_bloom = 0.83
+glow_blend_mode = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f8cct"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.572549, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qogg5"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0.572549, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7riu6"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0.572549, 1, 1)
+
+[node name="title" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2jeu1")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="fog" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_0h6up")
+layout_mode = 0
+offset_left = -19.0
+offset_top = -8.0
+offset_right = 1181.0
+offset_bottom = 687.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -317.0
+offset_top = 46.0
+offset_right = 317.0
+offset_bottom = 171.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0.572549, 1, 1)
+theme_override_fonts/font = ExtResource("1_l1mw3")
+theme_override_font_sizes/font_size = 50
+text = "Z e r 0 - S u m"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_d7e1k")
+
+[node name="play" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -191.0
+offset_top = -93.0
+offset_right = 191.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(191, 45)
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0.572549, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.6, 0.827451, 1, 1)
+theme_override_colors/font_hover_color = Color(0.278431, 0.686275, 1, 1)
+theme_override_fonts/font = ExtResource("3_1nyvw")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_f8cct")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qogg5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7riu6")
+text = "Play"
+script = ExtResource("4_llviq")
+delay = 1.0
+
+[node name="tutorial" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -191.0
+offset_top = 18.0
+offset_right = 191.0
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(191, 45)
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0.572549, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.6, 0.827451, 1, 1)
+theme_override_colors/font_hover_color = Color(0.278431, 0.686275, 1, 1)
+theme_override_fonts/font = ExtResource("3_1nyvw")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_f8cct")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qogg5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7riu6")
+text = "Tutorial
+"
+script = ExtResource("4_llviq")
+delay = 1.25
+
+[node name="quit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -191.0
+offset_top = 132.0
+offset_right = 191.0
+offset_bottom = 222.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(191, 45)
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0.572549, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.6, 0.827451, 1, 1)
+theme_override_colors/font_hover_color = Color(0.278431, 0.686275, 1, 1)
+theme_override_fonts/font = ExtResource("3_1nyvw")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_f8cct")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qogg5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7riu6")
+text = "Quit
+"
+script = ExtResource("4_llviq")
+delay = 1.5
+
+[node name="transition" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(576, 2.08165e-12)
+color = Color(0, 0, 0, 1)
+
+[connection signal="pressed" from="play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="tutorial" to="." method="_on_tutorial_pressed"]
+[connection signal="pressed" from="quit" to="." method="_on_quit_pressed"]

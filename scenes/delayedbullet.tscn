@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dawxxyyjuncjj"]
+
+[ext_resource type="Script" path="res://scripts/delayedbullet.gd" id="1_mp1bp"]
+[ext_resource type="Texture2D" uid="uid://7pyc1jbawmlf" path="res://assets/costume2-8.svg" id="2_cfp0x"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y4kut"]
+radius = 16.0
+
+[node name="delayedbullet" type="Node2D"]
+script = ExtResource("1_mp1bp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.321569, 0.321569, 1)
+texture = ExtResource("2_cfp0x")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_y4kut")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

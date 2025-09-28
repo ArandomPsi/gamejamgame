@@ -1,0 +1,429 @@
+[gd_scene load_steps=27 format=3 uid="uid://q1p83m65csqi"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_73xae"]
+[ext_resource type="Texture2D" uid="uid://cqcu6uhfjqrlh" path="res://assets/player2.svg" id="1_rbex6"]
+[ext_resource type="Texture2D" uid="uid://dts81v88vrira" path="res://assets/player.svg" id="2_suxmh"]
+[ext_resource type="Texture2D" uid="uid://dqdiohimqht50" path="res://assets/aimarrow.svg" id="3_obu1j"]
+[ext_resource type="Texture2D" uid="uid://cahs60xxxb8sc" path="res://assets/player aura.svg" id="4_yv0jo"]
+[ext_resource type="Shader" path="res://shaders/dissolve.gdshader" id="5_eybdo"]
+[ext_resource type="Script" path="res://scripts/nerfbutton.gd" id="6_sd6k2"]
+[ext_resource type="FontFile" uid="uid://b8py65jnbfyky" path="res://fonts/TrenchThin-aZ1J.ttf" id="7_hbqsi"]
+[ext_resource type="Texture2D" uid="uid://dxycw1h2ku3y8" path="res://assets/glass3-2.svg" id="8_v8cul"]
+[ext_resource type="Shader" path="res://shaders/motionblur.gdshader" id="9_v5r53"]
+[ext_resource type="Script" path="res://shaders/motionblur.gd" id="10_mcj7j"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pimyr"]
+noise_type = 4
+frequency = 0.004
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hhf8a"]
+noise = SubResource("FastNoiseLite_pimyr")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3smnd"]
+shader = ExtResource("5_eybdo")
+shader_parameter/percentage = 1.0
+shader_parameter/burn_texture = SubResource("NoiseTexture2D_hhf8a")
+shader_parameter/layer_1 = Color(0.2, 0.2, 0.52549, 1)
+shader_parameter/size_1 = 0.05
+shader_parameter/layer_2 = Color(0, 0.666667, 1, 1)
+shader_parameter/size_2 = 0.05
+shader_parameter/layer_3 = Color(0.560784, 0.764706, 1, 1)
+shader_parameter/size_3 = 0.05
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7c4w"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.341176, 0.431373, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fjaov"]
+bg_color = Color(0, 0, 0.145098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g3x0p"]
+bg_color = Color(0, 0, 0.145098, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.521569, 0.54902, 0.929412, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jgx2o"]
+shader = ExtResource("5_eybdo")
+shader_parameter/percentage = 1.0
+shader_parameter/burn_texture = SubResource("NoiseTexture2D_hhf8a")
+shader_parameter/layer_1 = Color(0.2, 0.2, 0.52549, 1)
+shader_parameter/size_1 = 0.05
+shader_parameter/layer_2 = Color(0, 0.666667, 1, 1)
+shader_parameter/size_2 = 0.05
+shader_parameter/layer_3 = Color(0.560784, 0.764706, 1, 1)
+shader_parameter/size_3 = 0.05
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c504b"]
+shader = ExtResource("9_v5r53")
+shader_parameter/alpha = 0.5
+shader_parameter/blur = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wvsky"]
+radius = 17.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_k1xhd"]
+blend_mode = 1
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_cambj"]
+offsets = PackedFloat32Array(0.235169, 0.995763)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_s4ybn"]
+gradient = SubResource("Gradient_cambj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hpihq"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 395.75
+initial_velocity_max = 678.51
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+gravity = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+scale_min = 0.2
+scale_max = 0.5
+color = Color(0.45098, 0.647059, 0.937255, 1)
+color_ramp = SubResource("GradientTexture1D_s4ybn")
+anim_offset_max = 1.0
+
+[sub_resource type="Animation" id="Animation_cmv6a"]
+resource_name = "diecutscene"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("player:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("aura:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pivot/Aimarrow:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera2D:zoom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(5, 5), Vector2(5, 5), Vector2(2, 2)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("shatter:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.9),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"diefr"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uftgi"]
+_data = {
+"diecutscene": SubResource("Animation_cmv6a")
+}
+
+[node name="player" type="Node2D"]
+script = ExtResource("1_73xae")
+
+[node name="player" type="TextureProgressBar" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -21.0
+offset_right = 21.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 5.0
+value = 5.0
+fill_mode = 4
+nine_patch_stretch = true
+texture_under = ExtResource("1_rbex6")
+texture_progress = ExtResource("2_suxmh")
+
+[node name="aura" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.415686)
+texture = ExtResource("4_yv0jo")
+
+[node name="pivot" type="Node2D" parent="."]
+
+[node name="Aimarrow" type="Sprite2D" parent="pivot"]
+modulate = Color(0.388235, 0.654902, 0.960784, 1)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_obu1j")
+offset = Vector2(70, 2.08165e-12)
+
+[node name="shotcooldown" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+autostart = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_right = 1152
+limit_bottom = 648
+
+[node name="hud" type="CanvasLayer" parent="."]
+
+[node name="flash" type="ColorRect" parent="hud"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="nerfs" type="Panel" parent="hud"]
+visible = false
+material = SubResource("ShaderMaterial_3smnd")
+anchors_preset = -1
+anchor_left = 0.288
+anchor_top = 0.27
+anchor_right = 0.712
+anchor_bottom = 0.579
+offset_left = 0.22398
+offset_top = 0.039993
+offset_right = -0.224014
+offset_bottom = -0.192036
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_h7c4w")
+
+[node name="Label" type="Label" parent="hud/nerfs"]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -104.0
+offset_top = 3.00002
+offset_right = 104.0
+offset_bottom = 34.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0.615686, 1, 1)
+theme_override_fonts/font = ExtResource("7_hbqsi")
+theme_override_font_sizes/font_size = 30
+text = "You are too strong!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="hud/nerfs"]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -102.0
+offset_top = 27.0
+offset_right = 106.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0.615686, 1, 1)
+theme_override_fonts/font = ExtResource("7_hbqsi")
+theme_override_font_sizes/font_size = 20
+text = "The devs want to nerf you"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="nerf1" type="Button" parent="hud/nerfs"]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 17.0
+offset_top = -25.0
+offset_right = 157.0
+offset_bottom = 55.0
+grow_vertical = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_hbqsi")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjaov")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g3x0p")
+script = ExtResource("6_sd6k2")
+
+[node name="nerf2" type="Button" parent="hud/nerfs"]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = -25.0
+offset_right = -16.0
+offset_bottom = 55.0
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_hbqsi")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjaov")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g3x0p")
+script = ExtResource("6_sd6k2")
+
+[node name="nerf3" type="Button" parent="hud/nerfs"]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.5
+offset_top = -25.0
+offset_right = 70.5
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_hbqsi")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_fjaov")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g3x0p")
+script = ExtResource("6_sd6k2")
+
+[node name="buffmessage" type="Panel" parent="hud"]
+visible = false
+material = SubResource("ShaderMaterial_jgx2o")
+anchors_preset = -1
+anchor_left = 0.315
+anchor_top = 0.292
+anchor_right = 0.688
+anchor_bottom = 0.557
+offset_left = -3.88
+offset_top = -164.216
+offset_right = 0.423973
+offset_bottom = -212.936
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_h7c4w")
+
+[node name="Label" type="Label" parent="hud/buffmessage"]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -182.0
+offset_top = 13.0
+offset_right = 182.0
+offset_bottom = 102.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0.615686, 1, 1)
+theme_override_fonts/font = ExtResource("7_hbqsi")
+theme_override_font_sizes/font_size = 40
+text = "The Buff"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="hud2" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="ColorRect" type="ColorRect" parent="hud2"]
+visible = false
+material = SubResource("ShaderMaterial_c504b")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("10_mcj7j")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_wvsky")
+
+[node name="shatter" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_k1xhd")
+emitting = false
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_hpihq")
+texture = ExtResource("8_v8cul")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+
+[node name="cutscenes" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_uftgi")
+}
+
+[connection signal="timeout" from="shotcooldown" to="." method="_on_shotcooldown_timeout"]
+[connection signal="pressed" from="hud/nerfs/nerf1" to="." method="_on_nerf_1_pressed"]
+[connection signal="pressed" from="hud/nerfs/nerf1" to="." method="nerfsdissapear"]
+[connection signal="pressed" from="hud/nerfs/nerf2" to="." method="_on_nerf_2_pressed"]
+[connection signal="pressed" from="hud/nerfs/nerf2" to="." method="nerfsdissapear"]
+[connection signal="pressed" from="hud/nerfs/nerf3" to="." method="_on_nerf_3_pressed"]
+[connection signal="pressed" from="hud/nerfs/nerf3" to="." method="nerfsdissapear"]

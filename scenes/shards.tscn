@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://bynptv37omfx6"]
+
+[ext_resource type="Texture2D" uid="uid://b7x57mv26ewkr" path="res://assets/shard.svg" id="1_ngef1"]
+[ext_resource type="Script" path="res://scripts/shoteffect.gd" id="2_h76b7"]
+
+[sub_resource type="Gradient" id="Gradient_2cq1l"]
+offsets = PackedFloat32Array(0.317857, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fihld"]
+gradient = SubResource("Gradient_2cq1l")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kp2np"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 377.25
+initial_velocity_max = 751.5
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+gravity = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+scale_min = 0.9
+scale_max = 2.0
+color_ramp = SubResource("GradientTexture1D_fihld")
+
+[node name="shards" type="GPUParticles2D"]
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_kp2np")
+texture = ExtResource("1_ngef1")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+script = ExtResource("2_h76b7")

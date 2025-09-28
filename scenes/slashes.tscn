@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://b143cwe2gm24o"]
+
+[ext_resource type="Script" path="res://scripts/slashes.gd" id="1_u4442"]
+[ext_resource type="Texture2D" uid="uid://b22y8vejhv60i" path="res://assets/dismantle-2.svg" id="2_8v2np"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wx8ix"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 3
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_mivvk"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.615094, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_bwwqu"]
+curve = SubResource("Curve_mivvk")
+
+[sub_resource type="Gradient" id="Gradient_n6ivq"]
+offsets = PackedFloat32Array(0, 0.25, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0ip67"]
+gradient = SubResource("Gradient_n6ivq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gline"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 89.6
+angle_min = -720.0
+angle_max = 720.0
+gravity = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+color = Color(1, 0.94902, 0.396078, 1)
+color_ramp = SubResource("GradientTexture1D_0ip67")
+anim_offset_curve = SubResource("CurveTexture_bwwqu")
+
+[node name="slashes" type="Node2D"]
+script = ExtResource("1_u4442")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_wx8ix")
+emitting = false
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_gline")
+texture = ExtResource("2_8v2np")
+lifetime = 0.1
+fixed_fps = 60
+visibility_rect = Rect2(-500, -500, 1000, 1000)

@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://dk6476htjpeae"]
+
+[ext_resource type="Script" path="res://scripts/boomerangbullet.gd" id="1_f0xu8"]
+[ext_resource type="Texture2D" uid="uid://dmmbpyf7jtfim" path="res://assets/ordinarybullet.svg" id="2_m8etx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y4kut"]
+radius = 6.08276
+
+[node name="bouncybullet" type="Node2D"]
+position = Vector2(50, 71)
+script = ExtResource("1_f0xu8")
+brange = 300
+bulletspeed = 1000
+bigboi = false
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.321569, 0.321569, 1)
+scale = Vector2(1.64706, 0.352941)
+texture = ExtResource("2_m8etx")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_y4kut")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

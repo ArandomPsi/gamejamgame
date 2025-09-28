@@ -1,0 +1,341 @@
+[gd_scene load_steps=29 format=3 uid="uid://0r1taiqlu3bc"]
+
+[ext_resource type="Script" path="res://scripts/boss.gd" id="1_6ohgb"]
+[ext_resource type="Texture2D" uid="uid://batpo8yi86n73" path="res://assets/basicboss.svg" id="1_morcx"]
+[ext_resource type="Texture2D" uid="uid://c2qltf8awegpu" path="res://assets/circle boss v2.svg" id="3_dp3jc"]
+[ext_resource type="Texture2D" uid="uid://bj6ie2qmg8jpm" path="res://assets/Final Boss.svg" id="4_r84ac"]
+[ext_resource type="Texture2D" uid="uid://c64auu1wjdalh" path="res://assets/medusa boss.svg" id="5_cyqbe"]
+[ext_resource type="Texture2D" uid="uid://dmmbpyf7jtfim" path="res://assets/ordinarybullet.svg" id="6_ccplf"]
+[ext_resource type="Texture2D" uid="uid://joalubpsvc1e" path="res://assets/Square Boss.svg" id="7_gnst7"]
+[ext_resource type="Texture2D" uid="uid://dpqtycwf2mec0" path="res://assets/north star boss aura.svg" id="7_p7ya8"]
+[ext_resource type="Texture2D" uid="uid://dpfaoa4dah6vj" path="res://assets/Triangle Boss v2.svg" id="8_wlt1d"]
+[ext_resource type="Texture2D" uid="uid://bt5ufo04igwpu" path="res://assets/medusa boss aura.svg" id="9_t288s"]
+[ext_resource type="Texture2D" uid="uid://dj0b7o7dbqahh" path="res://assets/Square Boss aura.svg" id="10_elxur"]
+[ext_resource type="Texture2D" uid="uid://dqvbqbo2lukyb" path="res://assets/Triangle Boss v2 aura.svg" id="11_c2fni"]
+[ext_resource type="Texture2D" uid="uid://cahs60xxxb8sc" path="res://assets/player aura.svg" id="12_jt1kb"]
+[ext_resource type="Texture2D" uid="uid://ds72grul7ovhl" path="res://assets/science.svg" id="13_d4a3o"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2y140"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_t288s")
+}],
+"loop": true,
+"name": &"0",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_elxur")
+}],
+"loop": true,
+"name": &"1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_c2fni")
+}],
+"loop": true,
+"name": &"2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_jt1kb")
+}],
+"loop": true,
+"name": &"3",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_d4a3o")
+}],
+"loop": true,
+"name": &"4",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_p7ya8")
+}],
+"loop": true,
+"name": &"5",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_c2fni")
+}],
+"loop": true,
+"name": &"6",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y0sxc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_morcx")
+}],
+"loop": true,
+"name": &"0",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_dp3jc")
+}],
+"loop": true,
+"name": &"1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_r84ac")
+}],
+"loop": true,
+"name": &"2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_cyqbe")
+}],
+"loop": true,
+"name": &"3",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_ccplf")
+}],
+"loop": true,
+"name": &"4",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_gnst7")
+}],
+"loop": true,
+"name": &"5",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_wlt1d")
+}],
+"loop": true,
+"name": &"6",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t0rv1"]
+radius = 63.0079
+
+[sub_resource type="Animation" id="Animation_v6u6n"]
+resource_name = "bigboulet"
+length = 0.5
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"bigbouletpew"
+}, {
+"args": [],
+"method": &"bigbouletpew"
+}, {
+"args": [],
+"method": &"bigbouletpew"
+}, {
+"args": [],
+"method": &"bigbouletpew"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_5l628"]
+resource_name = "boomeranghell"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"boomeranghell"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_rr6pe"]
+resource_name = "bouncypew"
+length = 10.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"bouncypew"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_igl5h"]
+resource_name = "bullethell"
+length = 1.5
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"bullethell"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_qqnyu"]
+resource_name = "delayedbullets"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawndelayedbullets"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_xcmn7"]
+resource_name = "sweatyhell"
+length = 3.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"sweatyhell"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_fctwe"]
+resource_name = "wavybullets"
+length = 2.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"wavypew"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3daan"]
+_data = {
+"bigboulet": SubResource("Animation_v6u6n"),
+"boomeranghell": SubResource("Animation_5l628"),
+"bouncypew": SubResource("Animation_rr6pe"),
+"bullethell": SubResource("Animation_igl5h"),
+"delayedbullets": SubResource("Animation_qqnyu"),
+"sweatyhell": SubResource("Animation_xcmn7"),
+"wavybullets": SubResource("Animation_fctwe")
+}
+
+[sub_resource type="Gradient" id="Gradient_3ox7a"]
+offsets = PackedFloat32Array(0, 0.266949, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6qvwg"]
+gradient = SubResource("Gradient_3ox7a")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wn8ip"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 200.0
+emission_ring_inner_radius = 200.0
+angle_min = -720.0
+angle_max = 720.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+radial_velocity_min = -937.98
+radial_velocity_max = -930.23
+gravity = Vector3(0, 98, 0)
+color = Color(1, 0.541176, 0.541176, 1)
+color_ramp = SubResource("GradientTexture1D_6qvwg")
+
+[node name="boss" type="Node2D"]
+script = ExtResource("1_6ohgb")
+
+[node name="aura" type="AnimatedSprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.345098)
+sprite_frames = SubResource("SpriteFrames_2y140")
+animation = &"6"
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 0.321569, 0.321569, 1)
+scale = Vector2(1e-05, 1e-05)
+sprite_frames = SubResource("SpriteFrames_y0sxc")
+animation = &"6"
+
+[node name="aim" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_t0rv1")
+
+[node name="attackplayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3daan")
+}
+
+[node name="formingup" type="GPUParticles2D" parent="."]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_wn8ip")
+texture = ExtResource("6_ccplf")
+lifetime = 0.2
+fixed_fps = 60

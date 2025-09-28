@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://fgc522ohb6wq"]
+
+[ext_resource type="Script" path="res://scripts/shoteffect.gd" id="1_63nc0"]
+
+[sub_resource type="Gradient" id="Gradient_ysru4"]
+offsets = PackedFloat32Array(0.519068, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ppiih"]
+gradient = SubResource("Gradient_ysru4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jqd2n"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 441.38
+initial_velocity_max = 879.31
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+gravity = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+scale_min = 7.0
+scale_max = 10.0
+color = Color(0.388235, 0.654902, 0.960784, 1)
+color_ramp = SubResource("GradientTexture1D_ppiih")
+
+[node name="shoteffect" type="GPUParticles2D"]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_jqd2n")
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+visibility_rect = Rect2(-500, -500, 1000, 1000)
+script = ExtResource("1_63nc0")

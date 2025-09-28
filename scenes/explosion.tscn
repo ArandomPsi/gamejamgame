@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckq7hwd3g8iu0"]
+
+[ext_resource type="Script" path="res://scripts/explosion.gd" id="1_o6lxs"]
+[ext_resource type="Texture2D" uid="uid://c642ktx1jwdxu" path="res://assets/boom-2.svg" id="2_mbth0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qlm0k"]
+radius = 221.02
+
+[node name="explosion" type="Node2D"]
+modulate = Color(0.388235, 0.654902, 0.960784, 1)
+script = ExtResource("1_o6lxs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("2_mbth0")
+
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+shape = SubResource("CircleShape2D_qlm0k")
+
+[connection signal="area_entered" from="Sprite2D/Area2D" to="." method="_on_area_2d_area_entered"]
