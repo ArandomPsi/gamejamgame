@@ -12,8 +12,8 @@ func _process(delta):
 	#normalmovement
 	position += transform.x * bulletspeed * delta
 	
-	var v = (get_global_mouse_position() - position).angle()
-	rotation = lerp_angle(rotation,v,0.02)
+	var v = (global.playerpos - position).angle()
+	rotation = lerp_angle(rotation,v,0.03)
 	
 	
 	if bullettime > brange:

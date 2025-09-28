@@ -108,6 +108,23 @@ text = "Z e r 0 - S u m"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="highscore" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -317.0
+offset_top = 97.0
+offset_right = 317.0
+offset_bottom = 222.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0.572549, 1, 1)
+theme_override_fonts/font = ExtResource("3_1nyvw")
+theme_override_font_sizes/font_size = 20
+text = "high score: 999"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_d7e1k")
 
@@ -195,6 +212,7 @@ script = ExtResource("4_llviq")
 delay = 1.5
 
 [node name="tutorialmenu" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.239

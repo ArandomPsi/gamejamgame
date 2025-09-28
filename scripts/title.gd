@@ -1,9 +1,14 @@
 extends Control
 
 func _ready():
+	if global.highscore > 0:
+		$highscore.text = "high score - " + str(global.highscore)
+	else:
+		$highscore.visible = false
 	$AudioStreamPlayer.volume_db
 	$transition.visible = true
 	$tutorialmenu.scale = Vector2(0,0)
+	$tutorialmenu.visible = true
 	var tween = create_tween()
 	tween.tween_property($transition,"scale",Vector2(0,1),0.5).set_trans(Tween.TRANS_CUBIC).set_delay(0.3)
 	tween.parallel().tween_property($AudioStreamPlayer,"volume_db",0,0.5).set_trans(Tween.TRANS_CUBIC)

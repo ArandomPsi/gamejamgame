@@ -8,7 +8,7 @@ var velocity : Vector2
 var attackcooldown : int = 400
 
 var attacks : Array = []
-var everyattack : Array = ["move", "teleport","sweatyhell" ,"bigboulet", "wavybullets", "bullethell", "delayedbullets", "bouncybullets", "boomerangbullets", "boomboom", "snipe", "curve"]
+var everyattack : Array = ["move", "teleport","sweatyhell" ,"bigboulet", "wavybullets", "bullethell", "delayedbullets", "bouncybullets", "boomerangbullets", "boomboom", "snipe", "curve", "ring"]
 
 var randombossnames : Array = [
 	"THE BOSS",
@@ -72,6 +72,8 @@ var movedir : Vector2
 var moveframes : int = 0
 
 func _ready():
+	$aura.play(str(randi_range(0,6)))
+	$aura.visible = false
 	$label.text = randombossnames.pick_random()
 	attacks.insert(0,everyattack.pick_random())
 	attacks.insert(1,everyattack.pick_random())
@@ -87,7 +89,7 @@ func _ready():
 	tween2.parallel().tween_property($label,"modulate", Color(1,1,1,0),0.8).set_trans(Tween.TRANS_CUBIC)
 	$formingup.emitting = false
 	$aura.visible = true
-	$aura.play(str(randi_range(0,6)))
+	
 
 func _process(delta):
 	moveframes -= 1
@@ -160,6 +162,9 @@ func ai():
 		"curve":
 			$aim.look_at(global.playerpos)
 			$attackplayer.play("curve")
+		"ring":
+			$aim.look_at(global.playerpos)
+			$attackplayer.play("ring")
 		_:
 			$attackplayer.play("bouncypew")
 	attackcooldown = 120 * defaultcooldownmult
@@ -345,6 +350,20 @@ func bouncypew():
 		$aim.rotation_degrees += randi_range(10,20)
 		
 
+func ring():
+	$aim.look_at(global.playerpos)
+	for i in range(100):
+		var b = preload("res://scenes/bigboulet.tscn").instantiate()
+		get_parent().add_child(b)
+		b.position = position
+		b.rotation = $aim.rotation
+		b.bulletspeed *= 0.5
+		$aim.rotation_degrees += 6
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+
 func ultimatewavypew():
 	$aim.look_at(global.playerpos)
 	for i in range(20):
@@ -384,6 +403,7 @@ func curveshot():
 		get_parent().add_child(b)
 		b.position = position
 		b.rotadir = dir
+		b.bulletspeed *= 0.6
 		b.rotation = $aim.rotation + (60 * dir)
 	
 

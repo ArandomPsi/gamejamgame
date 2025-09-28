@@ -203,6 +203,8 @@ func die():
 	$cutscenes.play("diecutscene")
 
 func diefr():
+	if global.highscore < score:
+		global.highscore = score
 	var tween = create_tween()
 	tween.tween_property($hud/transition,"scale",Vector2(1,1),0.5).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished

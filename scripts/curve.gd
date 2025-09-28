@@ -8,14 +8,14 @@ var bullettime : int = 0
 
 var rotadir = 1
 
-var rotaspeed = 3
+var rotaspeed = 15
 
 func _process(delta):
 	bullettime += 1
 	#normalmovement
 	position += transform.x * bulletspeed * delta
 	
-	rotation_degrees += rotaspeed * rotadir
+	rotation_degrees += (rotaspeed * delta) * rotadir
 	
 	
 	if bullettime > brange:
