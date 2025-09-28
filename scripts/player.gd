@@ -9,6 +9,9 @@ var flashalpha = 1
 
 var buffs : Array = ["more caffine", "more attack", "more bodyfat", "more accuracy", "i need more boulets", "more range", "more bullet caffine", "boomerang boulets", "boom boom", "so fire"]
 
+var playlist : Array = [preload("res://sounds/Hinkik - Skystrike [Bass Boosted - HQ].mp3"),
+preload("res://sounds/Shirobon - Out Of Love.mp3")]
+
 var iframes : int = 0
 var iframealpha : float = 0
 var iframetime : float = 0
@@ -24,7 +27,7 @@ var hitless : bool = true
 
 
 #stats
-var speed : int = 150
+var speed : int = 180
 var atk : int = 5
 var hp : int = 5
 var maxhp : int = 5
@@ -46,6 +49,7 @@ var nerfseverity : float = 0.9
 var poison : int = 0
 
 func _ready():
+	randomizemusic()
 	$hud/flash.visible = true
 	var tween = create_tween()
 	tween.tween_property($hud/transition,"scale",Vector2(0,1),0.5).set_trans(Tween.TRANS_CUBIC)
@@ -189,6 +193,7 @@ func take_damage(damage):
 		$hud/flash.visible = true
 		$hud/flash.color = Color(1,1,1,1)
 		flashalpha = 1
+		$music/hit.play()
 		if hp < 0:
 			iframes = 500
 			die()
@@ -292,7 +297,7 @@ func nextboss():
 	var b = preload("res://scenes/boss.tscn").instantiate()
 	get_parent().add_child(b)
 	b.position = Vector2(1152/2,648/2)
-	b.hp = 1000 + bossesslain * 200
+	b.hp = 500 + bossesslain * 50
 	var tween = create_tween()
 	tween.tween_property(self,"position",Vector2(1152/2,600),0.5).set_trans(Tween.TRANS_CUBIC)
 	
@@ -316,3 +321,11 @@ func _on_nerf_2_pressed():
 func _on_nerf_3_pressed():
 	nerfseverity = $hud/nerfs/nerf3.nerfamount
 	nerf($hud/nerfs/nerf3.nerftype, nerfseverity)
+
+
+func randomizemusic():
+	$music/skystrike.stream = playlist.pick_random()
+	$music/skystrike.play()
+
+func _on_skystrike_finished():
+	randomizemusic()

@@ -1,6 +1,6 @@
 extends Node2D
 
-var hp : int = 1000
+@export var hp : int = 500
 var defaultcooldownmult : int = 1
 
 var velocity : Vector2
@@ -8,7 +8,62 @@ var velocity : Vector2
 var attackcooldown : int = 400
 
 var attacks : Array = []
-var everyattack : Array = ["move", "teleport","sweatyhell" ,"bigboulet", "wavybullets", "bullethell", "delayedbullets", "bouncybullets", "boomerangbullets", "boomboom"]
+var everyattack : Array = ["move", "teleport","sweatyhell" ,"bigboulet", "wavybullets", "bullethell", "delayedbullets", "bouncybullets", "boomerangbullets", "boomboom", "snipe", "curve"]
+
+var randombossnames : Array = [
+	"THE BOSS",
+	"EXECUTIONER",
+	"THE BEATUP",
+	"OVERLORD",
+	"THE DESTROYER",
+	"IRON FIST",
+	"DOOMBRINGER",
+	"THE SLAUGHTERER",
+	"SHADOW KING",
+	"THE BUTCHER",
+	"WARBRINGER",
+	"THE CRUSHER",
+	"SOUL REAPER",
+	"THE OBLITERATOR",
+	"BLACK FANG",
+	"THE HOLLOW",
+	"GRAVEKEEPER",
+	"THE TORMENTOR",
+	"STORMBRINGER",
+	"THE WARDEN",
+	"BLOODHUNTER",
+	"THE DEVOURER",
+	"CHAOS LORD",
+	"THE UNSEEN",
+	"NIGHTMARE",
+	"THE EXECUTOR",
+	"SKULLBREAKER",
+	"THE HARVESTER",
+	"HELLBRINGER",
+	"THE WATCHER",
+	"IRONCLAD",
+	"THE DEMOLISHER",
+	"DEATH DEALER",
+	"THE SCOURGE",
+	"BONECRUSHER",
+	"THE ASCENDED",
+	"VOIDBRINGER",
+	"THE BERSERKER",
+	"TITANFALL",
+	"THE RECKONER",
+	"SOULBREAKER",
+	"THE STALKER",
+	"FROSTBITE",
+	"THE WIDOWMAKER",
+	"INFERNUS",
+	"THE CORRUPTOR",
+	"PLAGUEBEARER",
+	"THE ANNIHILATOR",
+	"BLOODLORD",
+	"THE END",
+	"THE GORGON",
+	"THE ILLUSION"
+]
 
 var flashalpha : float = 1
 
@@ -17,15 +72,19 @@ var movedir : Vector2
 var moveframes : int = 0
 
 func _ready():
+	$label.text = randombossnames.pick_random()
 	attacks.insert(0,everyattack.pick_random())
 	attacks.insert(1,everyattack.pick_random())
 	attacks.insert(2,everyattack.pick_random())
 	attacks.insert(3,everyattack.pick_random())
 	$formingup.emitting = true
-	$Sprite2D.play(str(randi_range(0,6)))
+	$Sprite2D.play(str(randi_range(0,7)))
 	var tween = create_tween()
 	tween.tween_property($Sprite2D,"scale",Vector2(2,2),0.8).set_trans(Tween.TRANS_CUBIC).set_delay(2)
+	tween.parallel().tween_property($label,"modulate", Color(1,1,1,1),0.8).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
+	var tween2 = create_tween()
+	tween2.parallel().tween_property($label,"modulate", Color(1,1,1,0),0.8).set_trans(Tween.TRANS_CUBIC)
 	$formingup.emitting = false
 	$aura.visible = true
 	$aura.play(str(randi_range(0,6)))
@@ -95,6 +154,12 @@ func ai():
 			$aim.look_at(Vector2(1152/2,648/2))
 			movedir = $aim.transform.x
 			moveframes = randi_range(120,360)
+		"snipe":
+			$aim.look_at(global.playerpos)
+			$attackplayer.play("snipe")
+		"curve":
+			$aim.look_at(global.playerpos)
+			$attackplayer.play("curve")
 		_:
 			$attackplayer.play("bouncypew")
 	attackcooldown = 120 * defaultcooldownmult
@@ -308,3 +373,37 @@ func bigbouletpew():
 	b.position = position
 	b.rotation = $aim.rotation
 	
+	
+
+func curveshot():
+	$aim.look_at(global.playerpos)
+	var dir = 1
+	for i in range(20):
+		dir *= -1
+		var b = preload("res://scenes/curvingbullet.tscn").instantiate()
+		get_parent().add_child(b)
+		b.position = position
+		b.rotadir = dir
+		b.rotation = $aim.rotation + (60 * dir)
+	
+
+func snipe():
+	$aim.look_at(global.playerpos)
+	$aim.rotation_degrees -= 60
+	for i in range(5):
+		$aim.rotation_degrees += 120
+		var b = preload("res://scenes/sniperbullet.tscn").instantiate()
+		get_parent().add_child(b)
+		b.position = position
+		b.rotation = $aim.rotation
+		for v in range(8):
+			await get_tree().process_frame
+		$aim.rotation_degrees += -120
+		var c = preload("res://scenes/sniperbullet.tscn").instantiate()
+		get_parent().add_child(c)
+		c.position = position
+		c.rotation = $aim.rotation
+		for v in range(8):
+			await get_tree().process_frame
+	
+

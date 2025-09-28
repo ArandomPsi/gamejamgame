@@ -26,4 +26,5 @@ func _ready():
 
 func _on_area_2d_area_entered(area):
 	area.get_parent().take_damage(damage)
-	print("yes")
+	$AudioStreamPlayer2D.pitch_scale = randf_range(0.9,1.2)
+	$AudioStreamPlayer2D.play()

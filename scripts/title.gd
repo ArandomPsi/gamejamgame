@@ -1,15 +1,17 @@
 extends Control
 
 func _ready():
+	$AudioStreamPlayer.volume_db
 	$transition.visible = true
 	$tutorialmenu.scale = Vector2(0,0)
 	var tween = create_tween()
 	tween.tween_property($transition,"scale",Vector2(0,1),0.5).set_trans(Tween.TRANS_CUBIC).set_delay(0.3)
-
+	tween.parallel().tween_property($AudioStreamPlayer,"volume_db",0,0.5).set_trans(Tween.TRANS_CUBIC)
 
 func _on_play_pressed():
 	var tween = create_tween()
 	tween.tween_property($transition,"scale",Vector2(1,1),0.5).set_trans(Tween.TRANS_CUBIC).set_delay(0.3)
+	tween.parallel().tween_property($AudioStreamPlayer,"volume_db",-80,0.5).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
 	get_tree().change_scene_to_file("res://scenes/testmap.tscn")
 

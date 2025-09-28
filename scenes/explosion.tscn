@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://ckq7hwd3g8iu0"]
+[gd_scene load_steps=5 format=3 uid="uid://ckq7hwd3g8iu0"]
 
 [ext_resource type="Script" path="res://scripts/explosion.gd" id="1_o6lxs"]
 [ext_resource type="Texture2D" uid="uid://c642ktx1jwdxu" path="res://assets/boom-2.svg" id="2_mbth0"]
+[ext_resource type="AudioStream" uid="uid://ddht3pj0di0r" path="res://sounds/osu-hit-sound.mp3" id="3_hpjen"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qlm0k"]
 radius = 221.02
@@ -20,5 +21,9 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
 shape = SubResource("CircleShape2D_qlm0k")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_hpjen")
+volume_db = 10.0
 
 [connection signal="area_entered" from="Sprite2D/Area2D" to="." method="_on_area_2d_area_entered"]

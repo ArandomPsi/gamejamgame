@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://q1p83m65csqi"]
+[gd_scene load_steps=29 format=3 uid="uid://q1p83m65csqi"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_73xae"]
 [ext_resource type="Texture2D" uid="uid://cqcu6uhfjqrlh" path="res://assets/player2.svg" id="1_rbex6"]
@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://dxycw1h2ku3y8" path="res://assets/glass3-2.svg" id="8_v8cul"]
 [ext_resource type="Shader" path="res://shaders/motionblur.gdshader" id="9_v5r53"]
 [ext_resource type="Script" path="res://shaders/motionblur.gd" id="10_mcj7j"]
+[ext_resource type="AudioStream" uid="uid://dr77g8eeymxrt" path="res://sounds/Hinkik - Skystrike [Bass Boosted - HQ].mp3" id="12_hvxjs"]
+[ext_resource type="AudioStream" uid="uid://cuafldbntboot" path="res://sounds/collide.wav" id="13_gpa1n"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_pimyr"]
 noise_type = 4
@@ -66,7 +68,7 @@ shader_parameter/alpha = 0.5
 shader_parameter/blur = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wvsky"]
-radius = 17.0
+radius = 11.0
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_k1xhd"]
 blend_mode = 1
@@ -437,7 +439,15 @@ fixed_fps = 60
 
 [node name="music" type="Node" parent="."]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="music"]
+[node name="skystrike" type="AudioStreamPlayer" parent="music"]
+stream = ExtResource("12_hvxjs")
+autoplay = true
+bus = &"music"
+
+[node name="hit" type="AudioStreamPlayer" parent="music"]
+stream = ExtResource("13_gpa1n")
+volume_db = -2.0
+bus = &"reverb"
 
 [node name="cutscenes" type="AnimationPlayer" parent="."]
 libraries = {
@@ -451,3 +461,4 @@ libraries = {
 [connection signal="pressed" from="hud/nerfs/nerf2" to="." method="nerfsdissapear"]
 [connection signal="pressed" from="hud/nerfs/nerf3" to="." method="_on_nerf_3_pressed"]
 [connection signal="pressed" from="hud/nerfs/nerf3" to="." method="nerfsdissapear"]
+[connection signal="finished" from="music/skystrike" to="." method="_on_skystrike_finished"]

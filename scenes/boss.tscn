@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://0r1taiqlu3bc"]
+[gd_scene load_steps=35 format=3 uid="uid://0r1taiqlu3bc"]
 
 [ext_resource type="Script" path="res://scripts/boss.gd" id="1_6ohgb"]
 [ext_resource type="Texture2D" uid="uid://batpo8yi86n73" path="res://assets/basicboss.svg" id="1_morcx"]
@@ -15,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://dqvbqbo2lukyb" path="res://assets/Triangle Boss v2 aura.svg" id="11_c2fni"]
 [ext_resource type="Texture2D" uid="uid://cahs60xxxb8sc" path="res://assets/player aura.svg" id="12_jt1kb"]
 [ext_resource type="Texture2D" uid="uid://ds72grul7ovhl" path="res://assets/science.svg" id="13_d4a3o"]
+[ext_resource type="FontFile" uid="uid://dtmmijkydgvd" path="res://fonts/MolganRegular-YqWj2.otf" id="16_f7oty"]
+[ext_resource type="Texture2D" uid="uid://biflxmn630scc" path="res://assets/illusionary final.svg" id="16_gc2ry"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2y140"]
 animations = [{
@@ -131,6 +133,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"6",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_gc2ry")
+}],
+"loop": true,
+"name": &"7",
 "speed": 5.0
 }]
 
@@ -288,6 +298,42 @@ tracks/0/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_d3hmw"]
+resource_name = "snipe"
+length = 0.5
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"snipe"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_x14gh"]
+resource_name = "curve"
+length = 0.5
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"curveshot"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3daan"]
 _data = {
 "bigboulet": SubResource("Animation_v6u6n"),
@@ -295,7 +341,9 @@ _data = {
 "boomeranghell": SubResource("Animation_5l628"),
 "bouncypew": SubResource("Animation_rr6pe"),
 "bullethell": SubResource("Animation_igl5h"),
+"curve": SubResource("Animation_x14gh"),
 "delayedbullets": SubResource("Animation_qqnyu"),
+"snipe": SubResource("Animation_d3hmw"),
 "sweatyhell": SubResource("Animation_xcmn7"),
 "wavybullets": SubResource("Animation_fctwe")
 }
@@ -328,7 +376,6 @@ color_ramp = SubResource("GradientTexture1D_6qvwg")
 script = ExtResource("1_6ohgb")
 
 [node name="aura" type="AnimatedSprite2D" parent="."]
-visible = false
 modulate = Color(1, 1, 1, 0.345098)
 sprite_frames = SubResource("SpriteFrames_2y140")
 animation = &"6"
@@ -337,7 +384,7 @@ animation = &"6"
 modulate = Color(1, 0.321569, 0.321569, 1)
 scale = Vector2(1e-05, 1e-05)
 sprite_frames = SubResource("SpriteFrames_y0sxc")
-animation = &"6"
+animation = &"7"
 
 [node name="aim" type="Node2D" parent="."]
 
@@ -359,3 +406,16 @@ process_material = SubResource("ParticleProcessMaterial_wn8ip")
 texture = ExtResource("6_ccplf")
 lifetime = 0.2
 fixed_fps = 60
+
+[node name="label" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = -191.0
+offset_top = -168.0
+offset_right = 191.0
+offset_bottom = -120.0
+theme_override_colors/font_color = Color(0.929412, 0.223529, 0.235294, 1)
+theme_override_fonts/font = ExtResource("16_f7oty")
+theme_override_font_sizes/font_size = 40
+text = "THE BOSS"
+horizontal_alignment = 1
+vertical_alignment = 1

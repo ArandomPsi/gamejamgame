@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c6accsyd88ny0"]
+[gd_scene load_steps=19 format=3 uid="uid://c6accsyd88ny0"]
 
 [ext_resource type="Script" path="res://scripts/title.gd" id="1_2jeu1"]
 [ext_resource type="FontFile" uid="uid://dtmmijkydgvd" path="res://fonts/MolganRegular-YqWj2.otf" id="1_l1mw3"]
@@ -8,6 +8,7 @@
 [ext_resource type="Shader" path="res://shaders/blur.gdshader" id="6_1qlc8"]
 [ext_resource type="Texture2D" uid="uid://c4xb4qto6480u" path="res://assets/button.svg" id="7_lbv4t"]
 [ext_resource type="Script" path="res://scripts/hoverbutton.gd" id="8_22a50"]
+[ext_resource type="AudioStream" uid="uid://bc4pgo2ok8hon" path="res://sounds/Nitro Fun - Final Boss - XenithVR Remix.mp3" id="9_acsxh"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_frvnh"]
 
@@ -242,7 +243,7 @@ wasd - basic movement
 M1 (holdable) - shoot
 M2 - life shot
 
--Overview-
+-OVERVIEW-
 fire your gun at the boss and try not to die. every time you kill a boss, you get nerfed but get an equally powerful buff.
 "
 
@@ -273,6 +274,11 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(576, 2.08165e-12)
 color = Color(0, 0, 0, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_acsxh")
+volume_db = -80.0
+autoplay = true
 
 [connection signal="pressed" from="play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="tutorial" to="." method="_on_tutorial_pressed"]

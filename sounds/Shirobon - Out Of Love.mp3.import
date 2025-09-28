@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bl4el3n7mx2hx"
+path="res://.godot/imported/Shirobon - Out Of Love.mp3-6e41aa6922a17d8d09ec5bff4f7ec0be.mp3str"
+
+[deps]
+
+source_file="res://sounds/Shirobon - Out Of Love.mp3"
+dest_files=["res://.godot/imported/Shirobon - Out Of Love.mp3-6e41aa6922a17d8d09ec5bff4f7ec0be.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
