@@ -39,6 +39,8 @@ var poison : int = 0
 
 func _ready():
 	$hud/flash.visible = true
+	var tween = create_tween()
+	tween.tween_property($hud/transition,"scale",Vector2(0,1),0.5).set_trans(Tween.TRANS_CUBIC)
 
 func _physics_process(delta):
 	camerashake -= 1
@@ -87,7 +89,7 @@ func controls():
 	if Input.is_action_just_pressed("supershot") and hp > 0:
 		canshoot = false
 		$shotcooldown.start(shotspeed)
-		velocity = transform.x * -600
+		velocity = $pivot.transform.x * -2000
 		flashalpha = 1
 		camerashake = 10
 		$hud/flash.color = Color(0.93000000715256, 0.84490501880646, 0.36269998550415)

@@ -26,11 +26,11 @@ func _ready():
 	await tween.finished
 	$formingup.emitting = false
 	$aura.visible = true
-	
+	$aura.play(str(randi_range(0,6)))
 
 func _process(delta):
-	$Sprite2D.rotation_degrees += 2
-	$aura.rotation_degrees -= 1
+	$Sprite2D.rotation_degrees -= 2
+	$aura.rotation_degrees += 1
 	time += delta
 	$aura.scale = Vector2(1,1) * (sin(time * 2)/5 + 1.2)
 	if hp < 1:
