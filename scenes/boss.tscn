@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://0r1taiqlu3bc"]
+[gd_scene load_steps=31 format=3 uid="uid://0r1taiqlu3bc"]
 
 [ext_resource type="Script" path="res://scripts/boss.gd" id="1_6ohgb"]
 [ext_resource type="Texture2D" uid="uid://batpo8yi86n73" path="res://assets/basicboss.svg" id="1_morcx"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dmmbpyf7jtfim" path="res://assets/ordinarybullet.svg" id="6_ccplf"]
 [ext_resource type="Texture2D" uid="uid://joalubpsvc1e" path="res://assets/Square Boss.svg" id="7_gnst7"]
 [ext_resource type="Texture2D" uid="uid://dpqtycwf2mec0" path="res://assets/north star boss aura.svg" id="7_p7ya8"]
+[ext_resource type="Texture2D" uid="uid://dba6be1smcdgu" path="res://assets/Final Boss aura.svg" id="8_hurjr"]
 [ext_resource type="Texture2D" uid="uid://dpfaoa4dah6vj" path="res://assets/Triangle Boss v2.svg" id="8_wlt1d"]
 [ext_resource type="Texture2D" uid="uid://bt5ufo04igwpu" path="res://assets/medusa boss aura.svg" id="9_t288s"]
 [ext_resource type="Texture2D" uid="uid://dj0b7o7dbqahh" path="res://assets/Square Boss aura.svg" id="10_elxur"]
@@ -67,7 +68,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("11_c2fni")
+"texture": ExtResource("8_hurjr")
 }],
 "loop": true,
 "name": &"6",
@@ -253,7 +254,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_fctwe"]
 resource_name = "wavybullets"
-length = 2.0
+length = 0.8
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -269,9 +270,28 @@ tracks/0/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_gb7wf"]
+resource_name = "boomboom"
+length = 0.5
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"boomboom"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3daan"]
 _data = {
 "bigboulet": SubResource("Animation_v6u6n"),
+"boomboom": SubResource("Animation_gb7wf"),
 "boomeranghell": SubResource("Animation_5l628"),
 "bouncypew": SubResource("Animation_rr6pe"),
 "bullethell": SubResource("Animation_igl5h"),

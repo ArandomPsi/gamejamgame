@@ -25,7 +25,7 @@ size = Vector2(1171, 71.25)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0ivqb"]
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_f66b8"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1kgeu"]
 seamless = true
 noise = SubResource("FastNoiseLite_0ivqb")
 
@@ -34,7 +34,7 @@ shader = ExtResource("3_utokx")
 shader_parameter/smoke_color = Color(0.8, 0.8, 0.8, 1)
 shader_parameter/distortion_speed = 0.2
 shader_parameter/density = 0.113
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_f66b8")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_1kgeu")
 
 [node name="testmap" type="Node2D"]
 

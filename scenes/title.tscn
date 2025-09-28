@@ -1,10 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://c6accsyd88ny0"]
+[gd_scene load_steps=18 format=3 uid="uid://c6accsyd88ny0"]
 
 [ext_resource type="Script" path="res://scripts/title.gd" id="1_2jeu1"]
 [ext_resource type="FontFile" uid="uid://dtmmijkydgvd" path="res://fonts/MolganRegular-YqWj2.otf" id="1_l1mw3"]
 [ext_resource type="Shader" path="res://shaders/fog.gdshader" id="2_cyrau"]
 [ext_resource type="FontFile" uid="uid://b8py65jnbfyky" path="res://fonts/TrenchThin-aZ1J.ttf" id="3_1nyvw"]
 [ext_resource type="Script" path="res://scripts/buttonintro.gd" id="4_llviq"]
+[ext_resource type="Shader" path="res://shaders/blur.gdshader" id="6_1qlc8"]
+[ext_resource type="Texture2D" uid="uid://c4xb4qto6480u" path="res://assets/button.svg" id="7_lbv4t"]
+[ext_resource type="Script" path="res://scripts/hoverbutton.gd" id="8_22a50"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_frvnh"]
 
@@ -51,6 +54,14 @@ border_width_top = 10
 border_width_right = 10
 border_width_bottom = 10
 border_color = Color(0, 0.572549, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w07nc"]
+shader = ExtResource("6_1qlc8")
+shader_parameter/samples = 35
+shader_parameter/lod = 2
+shader_parameter/tint_color = Color(0, 0, 0, 0.466667)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8apou"]
 
 [node name="title" type="Control"]
 layout_mode = 3
@@ -182,6 +193,76 @@ text = "Quit
 script = ExtResource("4_llviq")
 delay = 1.5
 
+[node name="tutorialmenu" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.239
+anchor_top = 0.262
+anchor_right = 0.761
+anchor_bottom = 0.855
+offset_left = -0.328009
+offset_top = 0.223984
+offset_right = 0.327957
+offset_bottom = -0.0400124
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(301, 192)
+theme_override_styles/panel = SubResource("StyleBoxFlat_f8cct")
+
+[node name="blur" type="ColorRect" parent="tutorialmenu"]
+show_behind_parent = true
+material = SubResource("ShaderMaterial_w07nc")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="tutorialmenu"]
+visible = false
+modulate = Color(0, 0.572549, 1, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 16.0
+offset_right = -21.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/table_odd_row_bg = Color(0, 0.572549, 1, 1)
+theme_override_colors/table_even_row_bg = Color(0, 0.572549, 1, 1)
+theme_override_colors/table_border = Color(0, 0.572549, 1, 1)
+theme_override_fonts/normal_font = ExtResource("3_1nyvw")
+theme_override_font_sizes/normal_font_size = 50
+text = "-CONTROLS-
+wasd - basic movement
+M1 (holdable) - shoot
+M2 - life shot
+
+-Overview-
+fire your gun at the boss and try not to die. every time you kill a boss, you get nerfed but get an equally powerful buff.
+"
+
+[node name="Button" type="Button" parent="tutorialmenu"]
+modulate = Color(0, 0.572549, 1, 1)
+layout_mode = 0
+offset_left = 535.0
+offset_top = -23.0
+offset_right = 632.0
+offset_bottom = 74.0
+scale = Vector2(0.4, 0.4)
+pivot_offset = Vector2(48, 48)
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8apou")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8apou")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_8apou")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_8apou")
+icon = ExtResource("7_lbv4t")
+script = ExtResource("8_22a50")
+
 [node name="transition" type="ColorRect" parent="."]
 visible = false
 layout_mode = 1
@@ -196,3 +277,6 @@ color = Color(0, 0, 0, 1)
 [connection signal="pressed" from="play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="tutorial" to="." method="_on_tutorial_pressed"]
 [connection signal="pressed" from="quit" to="." method="_on_quit_pressed"]
+[connection signal="mouse_entered" from="tutorialmenu/Button" to="tutorialmenu/Button" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="tutorialmenu/Button" to="tutorialmenu/Button" method="_on_mouse_exited"]
+[connection signal="pressed" from="tutorialmenu/Button" to="." method="tutorialdissapear"]

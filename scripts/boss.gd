@@ -8,11 +8,13 @@ var velocity : Vector2
 var attackcooldown : int = 400
 
 var attacks : Array = []
-var everyattack : Array = ["move", "teleport","sweatyhell" ,"bigboulet", "wavybullets", "bullethell", "delayedbullets", "bouncybullets", "boomerangbullets"]
+var everyattack : Array = ["move", "teleport","sweatyhell" ,"bigboulet", "wavybullets", "bullethell", "delayedbullets", "bouncybullets", "boomerangbullets", "boomboom"]
 
 var flashalpha : float = 1
 
 var time : float = 0
+var movedir : Vector2
+var moveframes : int = 0
 
 func _ready():
 	attacks.insert(0,everyattack.pick_random())
@@ -29,6 +31,7 @@ func _ready():
 	$aura.play(str(randi_range(0,6)))
 
 func _process(delta):
+	moveframes -= 1
 	$Sprite2D.rotation_degrees -= 2
 	$aura.rotation_degrees += 1
 	time += delta
@@ -40,6 +43,11 @@ func _process(delta):
 	if attackcooldown < 1:
 		ai()
 	updatepos(delta)
+	
+	if moveframes > 1:
+		velocity += movedir * 10
+	else:
+		movedir = Vector2.ZERO
 	
 	#attackflash
 	modulate = Color(1 + flashalpha,1 + flashalpha,1 + flashalpha,1)
@@ -53,20 +61,37 @@ func ai():
 			move()
 		"teleport":
 			teleport()
+			$aim.look_at(Vector2(1152/2,648/2))
+			movedir = $aim.transform.x
+			moveframes = randi_range(120,360)
 		"bigboulet":
 			$attackplayer.play("bigboulet")
+			$aim.look_at(Vector2(1152/2,648/2))
+			movedir = $aim.transform.x
+			moveframes = randi_range(120,360)
 		"delayedbullets":
 			$attackplayer.play("delayedbullets")
 		"bullethell":
 			$attackplayer.play("bullethell")
+			$aim.look_at(Vector2(1152/2,648/2))
+			movedir = $aim.transform.x
+			moveframes = randi_range(120,360)
 		"wavybullets":
 			$attackplayer.play("wavybullets")
 		"bouncybullets":
 			$attackplayer.play("bouncypew")
 		"sweatyhell":
 			$attackplayer.play("sweatyhell")
+			$aim.look_at(Vector2(1152/2,648/2))
+			movedir = $aim.transform.x
+			moveframes = randi_range(120,360)
 		"boomerangbullets":
 			$attackplayer.play("boomeranghell")
+		"boomboom":
+			$attackplayer.play("boomboom")
+			$aim.look_at(Vector2(1152/2,648/2))
+			movedir = $aim.transform.x
+			moveframes = randi_range(120,360)
 		_:
 			$attackplayer.play("bouncypew")
 	attackcooldown = 120 * defaultcooldownmult
@@ -136,6 +161,24 @@ func bullethell():
 		await get_tree().process_frame
 		await get_tree().process_frame
 		await get_tree().process_frame
+
+func boomboom():
+	for i in range(30):
+		var b = preload("res://scenes/boomboom.tscn").instantiate()
+		get_parent().add_child(b)
+		b.position = global.playerpos
+		b.position += Vector2(randi_range(-50,50),randi_range(-50,50))
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		
 
 func boomeranghell():
 	$aim.look_at(global.playerpos)

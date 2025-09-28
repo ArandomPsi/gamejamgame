@@ -69,6 +69,7 @@ func _physics_process(delta):
 	else:
 		$player.modulate = Color(1,1,1,1)
 	global.playerpos = position
+	global.playerhp = hp
 	
 
 #yada yada
@@ -167,7 +168,10 @@ func die():
 	$cutscenes.play("diecutscene")
 
 func diefr():
-	get_tree().quit()
+	var tween = create_tween()
+	tween.tween_property($hud/transition,"scale",Vector2(1,1),0.5).set_trans(Tween.TRANS_CUBIC)
+	await tween.finished
+	get_tree().change_scene_to_file("res://scenes/title.tscn")
 
 func nerf(type : int, decrease : float):
 	if type == 0: #speed nerf
@@ -250,12 +254,14 @@ func nerfmaterialmodify(value):
 	$hud/nerfs.material.set_shader_parameter("percentage",value)
 
 func nextboss():
+	bossesslain += 1
 	var b = preload("res://scenes/boss.tscn").instantiate()
 	get_parent().add_child(b)
 	b.position = Vector2(1152/2,648/2)
-	
+	b.hp = 1000 + bossesslain * 200
 	var tween = create_tween()
 	tween.tween_property(self,"position",Vector2(1152/2,600),0.5).set_trans(Tween.TRANS_CUBIC)
+	
 	
 	
 
