@@ -6,6 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_y4kut"]
 
 [node name="curve" type="Node2D"]
+position = Vector2(456, 268)
 script = ExtResource("1_bo8sx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

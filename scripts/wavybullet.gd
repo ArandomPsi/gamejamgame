@@ -1,14 +1,14 @@
 extends Node2D
 
-@export var brange : int = 300
-@export var bulletspeed : int = 500
+@export var brange : int = 600
+@export var bulletspeed : int = 170
 @export var bigboi : bool = true
 
 var bullettime : int = 0
 
 var time: float = 0.0
-@export var frequency: float = 5.0  # how fast it waves side to side
-@export var amplitude: float = 750.0  # how far it moves side to side
+@export var frequency: float = 3.0  # how fast it waves side to side
+@export var amplitude: float = 700.0  # how far it moves side to side
 
 
 func _process(delta):

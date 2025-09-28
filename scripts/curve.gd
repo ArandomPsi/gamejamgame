@@ -8,7 +8,7 @@ var bullettime : int = 0
 
 var rotadir = 1
 
-var rotaspeed = 15
+var rotaspeed = 120
 
 func _process(delta):
 	bullettime += 1
@@ -16,7 +16,7 @@ func _process(delta):
 	position += transform.x * bulletspeed * delta
 	
 	rotation_degrees += (rotaspeed * delta) * rotadir
-	
+	rotaspeed -= 3
 	
 	if bullettime > brange:
 		twintowers()

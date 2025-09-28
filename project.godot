@@ -10,10 +10,14 @@ config_version=5
 
 [application]
 
-config/name="Thegame"
+config/name="Zero Sum"
+config/description="Game Jam Game"
+config/version="1.0"
 run/main_scene="res://scenes/thecutscene.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://icon-2.svg"
+config/macos_native_icon="res://icon-2.svg"
+config/windows_native_icon="res://icon-2.png"
 
 [autoload]
 

@@ -10,7 +10,9 @@ var flashalpha = 1
 var buffs : Array = ["more caffine", "more attack", "more bodyfat", "more accuracy", "i need more boulets", "more range", "more bullet caffine", "boomerang boulets", "boom boom", "so fire"]
 
 var playlist : Array = [preload("res://sounds/Hinkik - Skystrike [Bass Boosted - HQ].mp3"),
-preload("res://sounds/Shirobon - Out Of Love.mp3")]
+preload("res://sounds/Shirobon - Out Of Love.mp3"),
+preload("res://sounds/[Progressive House] Hinkik - Invaders (Original Mix).mp3"),
+preload("res://sounds/Shirobon - Step It.mp3"),preload("res://sounds/Creo - Sphere.mp3")]
 
 var iframes : int = 0
 var iframealpha : float = 0
@@ -238,7 +240,7 @@ func buff(type : int):
 	elif type == 3: #spread buff
 		shotspread *= nerfseverity
 	elif type == 4: #shotamount buff
-		shotamount *= 2
+		shotamount += 2
 	elif type == 5: #range buff
 		bulletrange /= nerfseverity
 	elif type == 6: #bullet speed buff
@@ -251,6 +253,7 @@ func buff(type : int):
 		firebullets = true
 
 func nerfsappear():
+	iframes = 180
 	score += round_to_hths(41250000 * multiplier / time)
 	print(str(multiplier))
 	print(str(time))

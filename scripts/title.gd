@@ -1,6 +1,7 @@
 extends Control
 
 func _ready():
+	global.load_highscore()
 	if global.highscore > 0:
 		$highscore.text = "high score - " + str(global.highscore)
 	else:
@@ -24,9 +25,10 @@ func _on_play_pressed():
 func _on_tutorial_pressed():
 	tutorialappear()
 
-
+	
 func _on_quit_pressed():
 	get_tree().quit()
+	global.save_highscore()
 
 func tutorialappear():
 	var tween = create_tween()
