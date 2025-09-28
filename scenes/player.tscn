@@ -435,6 +435,10 @@ one_shot = true
 explosiveness = 1.0
 fixed_fps = 60
 
+[node name="music" type="Node" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="music"]
+
 [node name="cutscenes" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_uftgi")

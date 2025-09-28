@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dr77g8eeymxrt"
+path="res://.godot/imported/Hinkik - Skystrike [Bass Boosted - HQ].mp3-349e83281df801847a04fc8aa1ff0c43.mp3str"
+
+[deps]
+
+source_file="res://sounds/Hinkik - Skystrike [Bass Boosted - HQ].mp3"
+dest_files=["res://.godot/imported/Hinkik - Skystrike [Bass Boosted - HQ].mp3-349e83281df801847a04fc8aa1ff0c43.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

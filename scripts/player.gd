@@ -168,21 +168,17 @@ func shoteffect():
 
 func calcscore(delta):
 	time += delta * 1.25
-	multiplier = (bossesslain + 1) / 2
+	multiplier = float((bossesslain + 1) / 2.0)
 	if stop:
 		return
 	if hitless:
 		multiplier *= 1.5
-	print(time)
 	if time >= 3:
 		end = true
-	if end && not stop:
-		score = round_to_hths(41250000 * multiplier / time)
-		print(score)
-		stop = true
 
 func round_to_hths(num): # rounds to nearest hundredths place
-	return round(pow(10, 2) * num) / 100
+	#return round(pow(10, 2) * num) / 100
+	return int(num)
 
 func take_damage(damage):
 	if iframes < 1:
@@ -249,6 +245,8 @@ func buff(type : int):
 
 func nerfsappear():
 	score += round_to_hths(41250000 * multiplier / time)
+	print(str(multiplier))
+	print(str(time))
 	$hud/nerfs.visible = true
 	$hud/nerfs/nerf1.randomnerfs()
 	$hud/nerfs/nerf2.randomnerfs()
