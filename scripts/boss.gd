@@ -53,6 +53,9 @@ func _process(delta):
 	modulate = Color(1 + flashalpha,1 + flashalpha,1 + flashalpha,1)
 	flashalpha *= 0.9
 	
+	if global.playerhp < 0:
+		queue_free()
+	
 
 func ai():
 	var attack = randi_range(0,2)
@@ -226,16 +229,17 @@ func wavypew():
 			b.position = position
 			b.rotation = $aim.rotation
 			$aim.rotation_degrees += randi_range(0,360)
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
+		if global.playerhp > 0:
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
 
 func bouncypew():
 	$aim.look_at(global.playerpos)
@@ -247,30 +251,31 @@ func bouncypew():
 			b.position = position
 			b.rotation = $aim.rotation
 			b.grouprotation = grota
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
+			if global.playerhp > 0:
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
+				await get_tree().process_frame
 			
 		$aim.rotation_degrees += randi_range(10,20)
 		
@@ -284,16 +289,17 @@ func ultimatewavypew():
 			b.position = position
 			b.rotation = $aim.rotation
 			$aim.rotation_degrees += 18
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
+		if global.playerhp > 0:
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
+			await get_tree().process_frame
 
 func bigbouletpew():
 	$aim.look_at(global.playerpos)

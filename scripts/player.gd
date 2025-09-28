@@ -15,8 +15,16 @@ var iframetime : float = 0
 
 var bossesslain : int = 0
 
+var time : float = 0.0
+var score: float = 0
+var end: bool = false
+var stop: bool = false
+var multiplier: float = 1.0
+var hitless : bool = true
+
+
 #stats
-var speed : int = 120
+var speed : int = 150
 var atk : int = 5
 var hp : int = 5
 var maxhp : int = 5
@@ -25,7 +33,7 @@ var shotspeed : int = 0.05
 var shotspread : float = 0
 var shotamount : int = 1
 
-var firebullets : bool = true
+var firebullets : bool = false
 var explodingbullets : bool = false
 var boomerangbullets : bool = false
 var bulletrange : int = 75
@@ -68,6 +76,13 @@ func _physics_process(delta):
 		$player.modulate = Color(1+iframealpha,1+iframealpha,1+iframealpha, 1)
 	else:
 		$player.modulate = Color(1,1,1,1)
+	
+	#calculate the score
+	calcscore(delta)
+	$hud/score.text = "score - " + str(score)
+	#for hitless
+	get_parent().get_child(1).visible = hitless
+	
 	global.playerpos = position
 	global.playerhp = hp
 	
@@ -151,9 +166,28 @@ func shoteffect():
 	b.look_at(get_global_mouse_position())
 	b.position += $pivot/Aimarrow.offset.x * b.transform.x
 
+func calcscore(delta):
+	time += delta * 1.25
+	multiplier = (bossesslain + 1) / 2
+	if stop:
+		return
+	if hitless:
+		multiplier *= 1.5
+	print(time)
+	if time >= 3:
+		end = true
+	if end && not stop:
+		score = round_to_hths(41250000 * multiplier / time)
+		print(score)
+		stop = true
+
+func round_to_hths(num): # rounds to nearest hundredths place
+	return round(pow(10, 2) * num) / 100
+
 func take_damage(damage):
 	if iframes < 1:
 		iframes = 30
+		hitless = false
 		hp -= damage
 		camerashake = 20
 		$hud/flash.visible = true
@@ -214,6 +248,7 @@ func buff(type : int):
 		firebullets = true
 
 func nerfsappear():
+	score += round_to_hths(41250000 * multiplier / time)
 	$hud/nerfs.visible = true
 	$hud/nerfs/nerf1.randomnerfs()
 	$hud/nerfs/nerf2.randomnerfs()
@@ -255,6 +290,7 @@ func nerfmaterialmodify(value):
 
 func nextboss():
 	bossesslain += 1
+	hitless = true
 	var b = preload("res://scenes/boss.tscn").instantiate()
 	get_parent().add_child(b)
 	b.position = Vector2(1152/2,648/2)
