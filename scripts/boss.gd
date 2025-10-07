@@ -5,10 +5,15 @@ var defaultcooldownmult : int = 1
 
 var velocity : Vector2
 
-var attackcooldown : int = 400
+var attackcooldown : int = 200
 
 var attacks : Array = []
-var everyattack : Array = ["move", "teleport","sweatyhell" ,"bigboulet", "wavybullets", "bullethell", "delayedbullets", "bouncybullets", "boomerangbullets", "boomboom", "snipe", "curve", "ring"]
+var everyattack : Array = ["move", "teleport","sweatyhell" ,"bigboulet", "wavybullets", "bullethell", "delayedbullets", "bouncybullets", 
+"boomerangbullets", "boomboom", "snipe", "curve", "ring", "boomboomhell", "randomhell", "lasershow"]
+
+
+var shielded : bool = false
+var shieldalpha : float = 0
 
 var randombossnames : Array = [
 	"THE BOSS",
@@ -72,6 +77,7 @@ var movedir : Vector2
 var moveframes : int = 0
 
 func _ready():
+	shielded = true
 	$aura.play(str(randi_range(0,6)))
 	$aura.visible = false
 	$label.text = randombossnames.pick_random()
@@ -89,9 +95,16 @@ func _ready():
 	tween2.parallel().tween_property($label,"modulate", Color(1,1,1,0),0.8).set_trans(Tween.TRANS_CUBIC)
 	$formingup.emitting = false
 	$aura.visible = true
+	shielded = false
 	
 
 func _process(delta):
+	
+	if shielded:
+		shieldalpha = lerpf(shieldalpha,0.227,0.05)
+	else:
+		shieldalpha = lerpf(shieldalpha,0,0.05)
+	$shield.modulate = Color(1,1,1,shieldalpha)
 	moveframes -= 1
 	$Sprite2D.rotation_degrees -= 2
 	$aura.rotation_degrees += 1
@@ -116,6 +129,8 @@ func _process(delta):
 	
 	if global.playerhp < 0:
 		queue_free()
+	
+	global.bosspos = position
 	
 
 func ai():
@@ -156,6 +171,11 @@ func ai():
 			$aim.look_at(Vector2(1152/2,648/2))
 			movedir = $aim.transform.x
 			moveframes = randi_range(120,360)
+		"boomboomhell":
+			$attackplayer.play("boomeranghell")
+			$aim.look_at(Vector2(1152/2,648/2))
+			movedir = $aim.transform.x
+			moveframes = randi_range(120,360)
 		"snipe":
 			$aim.look_at(global.playerpos)
 			$attackplayer.play("snipe")
@@ -165,6 +185,15 @@ func ai():
 		"ring":
 			$aim.look_at(global.playerpos)
 			$attackplayer.play("ring")
+		"randomhell":
+			$aim.look_at(global.playerpos)
+			$attackplayer.play("randomhell")
+			$aim.look_at(Vector2(1152/2,648/2))
+			movedir = $aim.transform.x
+			moveframes = randi_range(120,360)
+		"lasershow":
+			$aim.look_at(global.playerpos)
+			$attackplayer.play("lasershow")
 		_:
 			$attackplayer.play("bouncypew")
 	attackcooldown = 120 * defaultcooldownmult
@@ -235,12 +264,56 @@ func bullethell():
 		await get_tree().process_frame
 		await get_tree().process_frame
 
+func lasershow():
+	for i in range(40):
+		$aim.look_at(global.playerpos)
+		var b = preload("res://scenes/laser.tscn").instantiate()
+		get_parent().add_child(b)
+		b.position = position
+		b.rotation_degrees += randi_range(-30,30)
+		b.rotation = $aim.rotation
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+
 func boomboom():
 	for i in range(30):
 		var b = preload("res://scenes/boomboom.tscn").instantiate()
 		get_parent().add_child(b)
 		b.position = global.playerpos
 		b.position += Vector2(randi_range(-50,50),randi_range(-50,50))
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		
+
+func boomboomhell():
+	for i in range(60):
+		var b = preload("res://scenes/boomboom.tscn").instantiate()
+		get_parent().add_child(b)
+		b.position = Vector2(randi_range(0,1152),randi_range(0,648))
 		await get_tree().process_frame
 		await get_tree().process_frame
 		await get_tree().process_frame
@@ -284,10 +357,40 @@ func sweatyhell():
 		await get_tree().process_frame
 		await get_tree().process_frame
 
+func randomhell():
+	for i in range(20):
+		$aim.look_at(global.playerpos)
+		var b = preload("res://scenes/delayedbullet.tscn").instantiate()
+		get_parent().add_child(b)
+		b.position = position
+		b.rotation = $aim.rotation
+		b.rotation_degrees += randf_range(-180,180)
+		b.targetagain = false
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		$aim.look_at(global.playerpos)
+		var v = preload("res://scenes/bigboulet.tscn").instantiate()
+		get_parent().add_child(b)
+		v.position = position
+		v.rotation = $aim.rotation
+		v.rotation_degrees += randf_range(-180,180)
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+
+
 func take_damage(damage):
-	hp -= damage
-	flashalpha = 1
-	print(str(hp))
+	if not shielded:
+		hp -= damage
+		flashalpha = 1
+		print(str(hp))
 	
 
 func wavypew():
@@ -396,7 +499,7 @@ func bigbouletpew():
 
 func curveshot():
 	$aim.look_at(global.playerpos)
-	var dir = 1
+	var dir = -1
 	for i in range(20):
 		dir *= -1
 		var b = preload("res://scenes/curvingbullet.tscn").instantiate()
@@ -404,7 +507,13 @@ func curveshot():
 		b.position = position
 		b.rotadir = dir
 		b.bulletspeed *= 0.6
-		b.rotation = $aim.rotation + (60 * dir)
+		b.rotation_degrees = $aim.rotation_degrees + (5 * dir)
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
 	
 
 func snipe():

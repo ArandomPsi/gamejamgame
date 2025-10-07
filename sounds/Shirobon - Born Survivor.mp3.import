@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bp7nc1p74mqem"
+path="res://.godot/imported/Shirobon - Born Survivor.mp3-d92c586872a775e567a8230c964a4a43.mp3str"
+
+[deps]
+
+source_file="res://sounds/Shirobon - Born Survivor.mp3"
+dest_files=["res://.godot/imported/Shirobon - Born Survivor.mp3-d92c586872a775e567a8230c964a4a43.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

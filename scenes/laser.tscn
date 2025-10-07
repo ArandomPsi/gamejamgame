@@ -1,23 +1,28 @@
 [gd_scene load_steps=4 format=3 uid="uid://macll1tmubdp"]
 
-[ext_resource type="Script" path="res://scripts/laser.gd" id="1_7wvio"]
-[ext_resource type="Texture2D" uid="uid://ioc1pkjkmfb1" path="res://assets/laser-2.svg" id="1_52rbn"]
+[ext_resource type="Script" path="res://scripts/laser.gd" id="1_8cla2"]
+[ext_resource type="Texture2D" uid="uid://ioc1pkjkmfb1" path="res://assets/laser-2.svg" id="1_266e1"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xoq8l"]
-size = Vector2(1223, 114)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_67nvj"]
+size = Vector2(2504, 58)
 
 [node name="laser" type="Node2D"]
-script = ExtResource("1_7wvio")
+script = ExtResource("1_8cla2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-self_modulate = Color(1, 0.219608, 0.219608, 1)
-position = Vector2(603.75, 0)
-scale = Vector2(2.21664, 2.88372)
-texture = ExtResource("1_52rbn")
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 0.290196, 0.290196, 1)
+position = Vector2(1251, 1.5)
+scale = Vector2(4.59232, 1)
+texture = ExtResource("1_266e1")
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2(1233, 4)
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(601.5, 0)
-shape = SubResource("RectangleShape2D_xoq8l")
+shape = SubResource("RectangleShape2D_67nvj")
 disabled = true
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

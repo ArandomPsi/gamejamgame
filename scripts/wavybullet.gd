@@ -7,7 +7,7 @@ extends Node2D
 var bullettime : int = 0
 
 var time: float = 0.0
-@export var frequency: float = 3.0  # how fast it waves side to side
+@export var frequency: float = 5.0  # how fast it waves side to side
 @export var amplitude: float = 700.0  # how far it moves side to side
 
 

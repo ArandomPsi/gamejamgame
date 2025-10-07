@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://0r1taiqlu3bc"]
+[gd_scene load_steps=39 format=3 uid="uid://0r1taiqlu3bc"]
 
 [ext_resource type="Script" path="res://scripts/boss.gd" id="1_6ohgb"]
 [ext_resource type="Texture2D" uid="uid://batpo8yi86n73" path="res://assets/basicboss.svg" id="1_morcx"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://ds72grul7ovhl" path="res://assets/science.svg" id="13_d4a3o"]
 [ext_resource type="FontFile" uid="uid://dtmmijkydgvd" path="res://fonts/MolganRegular-YqWj2.otf" id="16_f7oty"]
 [ext_resource type="Texture2D" uid="uid://biflxmn630scc" path="res://assets/illusionary final.svg" id="16_gc2ry"]
+[ext_resource type="Texture2D" uid="uid://ciel7w2qdgvpe" path="res://assets/shield-2.svg" id="18_ge4kg"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2y140"]
 animations = [{
@@ -280,6 +281,60 @@ tracks/0/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_axye2"]
+resource_name = "lasershow"
+length = 3.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"lasershow"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_d2k3q"]
+resource_name = "randomhell"
+length = 3.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"randomhell"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_67w8m"]
+resource_name = "ring"
+length = 3.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"boomboomhell"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_d3hmw"]
 resource_name = "snipe"
 length = 0.5
@@ -334,24 +389,6 @@ tracks/0/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_67w8m"]
-resource_name = "ring"
-length = 3.0
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"ring"
-}]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3daan"]
 _data = {
 "bigboulet": SubResource("Animation_v6u6n"),
@@ -361,6 +398,8 @@ _data = {
 "bullethell": SubResource("Animation_igl5h"),
 "curve": SubResource("Animation_x14gh"),
 "delayedbullets": SubResource("Animation_qqnyu"),
+"lasershow": SubResource("Animation_axye2"),
+"randomhell": SubResource("Animation_d2k3q"),
 "ring": SubResource("Animation_67w8m"),
 "snipe": SubResource("Animation_d3hmw"),
 "sweatyhell": SubResource("Animation_xcmn7"),
@@ -438,3 +477,8 @@ theme_override_font_sizes/font_size = 40
 text = "THE BOSS"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="shield" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("18_ge4kg")

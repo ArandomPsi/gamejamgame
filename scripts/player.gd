@@ -5,14 +5,15 @@ var velocity : Vector2
 var canshoot : bool = false
 
 var camerashake : int = 0
-var flashalpha = 1
+var flashalpha = 0
 
-var buffs : Array = ["more caffine", "more attack", "more bodyfat", "more accuracy", "i need more boulets", "more range", "more bullet caffine", "boomerang boulets", "boom boom", "so fire"]
+var buffs : Array = ["more speed", "more attack", "more stability", "more accuracy", "i need more boulets", "more range", "more bullet speed", 
+"boomerang boulets", "explosion size", "double hit", "more haks", "more BRRRRRR"]
 
 var playlist : Array = [preload("res://sounds/Hinkik - Skystrike [Bass Boosted - HQ].mp3"),
-preload("res://sounds/Shirobon - Out Of Love.mp3"),
 preload("res://sounds/[Progressive House] Hinkik - Invaders (Original Mix).mp3"),
-preload("res://sounds/Shirobon - Step It.mp3"),preload("res://sounds/Creo - Sphere.mp3")]
+preload("res://sounds/Shirobon - Step It.mp3"),preload("res://sounds/Creo - Sphere.mp3"), preload("res://sounds/Shirobon - Born Survivor.mp3"),
+preload("res://sounds/Hinkik & A Himitsu - Realms.mp3")]
 
 var iframes : int = 0
 var iframealpha : float = 0
@@ -34,7 +35,7 @@ var atk : int = 5
 var hp : int = 5
 var maxhp : int = 5
 
-var shotspeed : int = 0.05
+var shotspeed : float = 0.2
 var shotspread : float = 0
 var shotamount : int = 1
 
@@ -43,6 +44,8 @@ var explodingbullets : bool = false
 var boomerangbullets : bool = false
 var bulletrange : int = 75
 var bulletspeed : int = 700
+var homing : float = 0
+
 
 #debuffs
 var maxnerf : int = 6
@@ -50,11 +53,15 @@ var nerfseverity : float = 0.9
 
 var poison : int = 0
 
+var musicbusaudio : float = 0
+
 func _ready():
 	randomizemusic()
 	$hud/flash.visible = true
+	$hud/transition.visible = true
 	var tween = create_tween()
 	tween.tween_property($hud/transition,"scale",Vector2(0,1),0.5).set_trans(Tween.TRANS_CUBIC)
+	
 
 func _physics_process(delta):
 	camerashake -= 1
@@ -75,7 +82,14 @@ func _physics_process(delta):
 	
 	#flash
 	$hud/flash.modulate = Color(1,1,1,flashalpha)
-	flashalpha *= 0.8
+	flashalpha *= 0.9
+	
+	#music
+	if not $cutscenes.is_playing():
+		musicbusaudio = lerpf(musicbusaudio,0,0.05)
+	else:
+		musicbusaudio = lerpf(musicbusaudio,-70,0.05)
+	$music/skystrike.volume_db = musicbusaudio
 	
 	iframealpha = sin(iframetime * 50)
 	if iframes > 1:
@@ -116,7 +130,7 @@ func controls():
 		camerashake = 10
 		$hud/flash.color = Color(0.93000000715256, 0.84490501880646, 0.36269998550415)
 		supershoot()
-		hp -= 1
+		hp /= 2
 	
 	
 	if Input.is_action_just_pressed("debug"):
@@ -124,6 +138,11 @@ func controls():
 	
 	if Input.is_action_just_pressed("debug2"):
 		nerfsappear()
+	
+	$hud/ezhpbar.visible = global.ezhp
+	$hud/ezhpbar.max_value = maxhp
+	$hud/ezhpbar.value = hp
+	
 	
 
 func updatepos(delta):
@@ -153,6 +172,7 @@ func shoot():
 		b.look_at(get_global_mouse_position())
 		b.rotation_degrees += randf_range(-shotspread,shotspread)
 		b.position += b.transform.x * $pivot/Aimarrow.offset.x
+		b.homing = homing
 	
 	shoteffect()
 	camerashake = 2
@@ -195,7 +215,9 @@ func take_damage(damage):
 		$hud/flash.visible = true
 		$hud/flash.color = Color(1,1,1,1)
 		flashalpha = 1
+		$music/hit.pitch_scale = randf_range(1.6,1.9)
 		$music/hit.play()
+		musicbusaudio = -70
 		if hp < 0:
 			iframes = 500
 			die()
@@ -228,6 +250,14 @@ func nerf(type : int, decrease : float):
 		bulletrange *= decrease
 	elif type == 6: #bullet speed nerf
 		bulletspeed *= decrease
+	elif type == 7:
+		boomerangbullets = false
+	elif type == 8:
+		firebullets = false
+	elif type == 9:
+		homing *= decrease
+	elif type == 10:
+		shotspeed += 0.05
 	
 
 func buff(type : int):
@@ -241,6 +271,7 @@ func buff(type : int):
 		shotspread *= nerfseverity
 	elif type == 4: #shotamount buff
 		shotamount += 2
+		shotspread += 3
 	elif type == 5: #range buff
 		bulletrange /= nerfseverity
 	elif type == 6: #bullet speed buff
@@ -251,6 +282,10 @@ func buff(type : int):
 		explodingbullets = true
 	elif type == 9: #bullet speed buff
 		firebullets = true
+	elif type == 10:
+		homing += 0.02
+	elif type == 11:
+		shotspeed *= nerfseverity
 
 func nerfsappear():
 	iframes = 180
@@ -276,7 +311,7 @@ func nerfsdissapear():
 
 func buffsappear():
 	$hud/buffmessage.visible = true
-	var randombuff : int = randi_range(0,9)
+	var randombuff : int = randi_range(0,11)
 	$hud/buffmessage/Label.text = str(round(100 - (nerfseverity * 100))) + "% " + buffs[randombuff]
 	buff(randombuff)
 	$hud/flash.color = Color(0.47000002861023, 1, 0.55833327770233)
@@ -302,7 +337,7 @@ func nextboss():
 	var b = preload("res://scenes/boss.tscn").instantiate()
 	get_parent().add_child(b)
 	b.position = Vector2(1152/2,648/2)
-	b.hp = 500 + bossesslain * 50
+	b.hp = 750 + bossesslain * 100
 	var tween = create_tween()
 	tween.tween_property(self,"position",Vector2(1152/2,600),0.5).set_trans(Tween.TRANS_CUBIC)
 	
@@ -310,6 +345,7 @@ func nextboss():
 	
 
 func _on_shotcooldown_timeout():
+	$shotcooldown.wait_time = shotspeed
 	canshoot = true
 
 

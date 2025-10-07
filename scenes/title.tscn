@@ -1,14 +1,18 @@
-[gd_scene load_steps=19 format=3 uid="uid://c6accsyd88ny0"]
+[gd_scene load_steps=30 format=3 uid="uid://c6accsyd88ny0"]
 
 [ext_resource type="Script" path="res://scripts/title.gd" id="1_2jeu1"]
 [ext_resource type="FontFile" uid="uid://dtmmijkydgvd" path="res://fonts/MolganRegular-YqWj2.otf" id="1_l1mw3"]
 [ext_resource type="Shader" path="res://shaders/fog.gdshader" id="2_cyrau"]
 [ext_resource type="FontFile" uid="uid://b8py65jnbfyky" path="res://fonts/TrenchThin-aZ1J.ttf" id="3_1nyvw"]
+[ext_resource type="Script" path="res://scripts/fog.gd" id="3_x5aqj"]
 [ext_resource type="Script" path="res://scripts/buttonintro.gd" id="4_llviq"]
 [ext_resource type="Shader" path="res://shaders/blur.gdshader" id="6_1qlc8"]
 [ext_resource type="Texture2D" uid="uid://c4xb4qto6480u" path="res://assets/button.svg" id="7_lbv4t"]
 [ext_resource type="Script" path="res://scripts/hoverbutton.gd" id="8_22a50"]
-[ext_resource type="AudioStream" uid="uid://bc4pgo2ok8hon" path="res://sounds/Nitro Fun - Final Boss - XenithVR Remix.mp3" id="9_acsxh"]
+[ext_resource type="Script" path="res://scripts/noise.gd" id="9_52k2h"]
+[ext_resource type="AudioStream" uid="uid://dx2dca8d3edy2" path="res://sounds/Hinkik & A Himitsu - Realms.mp3" id="10_pce62"]
+[ext_resource type="Texture2D" uid="uid://c25u6pagn1hbp" path="res://assets/brigth.svg" id="11_u4yeb"]
+[ext_resource type="Shader" path="res://shaders/thecutscene.gdshader" id="12_hsfxa"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_frvnh"]
 
@@ -22,6 +26,35 @@ shader_parameter/smoke_color = Color(0.8, 0.8, 0.8, 1)
 shader_parameter/distortion_speed = 0.683
 shader_parameter/density = 0.058
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_yxljt")
+
+[sub_resource type="Gradient" id="Gradient_ud41c"]
+offsets = PackedFloat32Array(0, 0.12605, 0.266807)
+colors = PackedColorArray(1, 1, 1, 0.0625, 1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gcrtf"]
+gradient = SubResource("Gradient_ud41c")
+
+[sub_resource type="Curve" id="Curve_pxr88"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_lwrgo"]
+curve = SubResource("Curve_pxr88")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mtkhg"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(600, 100, 1)
+direction = Vector3(2.08165e-12, -1, 2.08165e-12)
+spread = 15.0
+initial_velocity_min = 71.92
+initial_velocity_max = 181.51
+gravity = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+scale_min = 0.1
+scale_max = 0.2
+scale_curve = SubResource("CurveTexture_lwrgo")
+color = Color(0.443137, 0.705882, 0.988235, 1)
+color_ramp = SubResource("GradientTexture1D_gcrtf")
 
 [sub_resource type="Environment" id="Environment_d7e1k"]
 background_mode = 3
@@ -64,6 +97,18 @@ shader_parameter/tint_color = Color(0, 0, 0, 0.466667)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8apou"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_58ecf"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25098, 0.67451, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q0liu"]
+shader = ExtResource("12_hsfxa")
+shader_parameter/noise_intensity = 0.053
+
 [node name="title" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -90,6 +135,14 @@ offset_top = -8.0
 offset_right = 1181.0
 offset_bottom = 687.0
 mouse_filter = 2
+script = ExtResource("3_x5aqj")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(592, 588)
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_mtkhg")
+texture = ExtResource("11_u4yeb")
+lifetime = 3.0
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
@@ -108,7 +161,25 @@ text = "Z e r 0 - S u m"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 139.0
+offset_top = 58.0
+offset_right = 230.0
+offset_bottom = 183.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0.572549, 1, 1)
+theme_override_fonts/font = ExtResource("1_l1mw3")
+theme_override_font_sizes/font_size = 20
+text = "v1.2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="highscore" type="Label" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -178,7 +249,7 @@ theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_f8cct")
 theme_override_styles/hover = SubResource("StyleBoxFlat_qogg5")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_7riu6")
-text = "Tutorial
+text = "Settings
 "
 script = ExtResource("4_llviq")
 delay = 1.25
@@ -212,17 +283,16 @@ script = ExtResource("4_llviq")
 delay = 1.5
 
 [node name="tutorialmenu" type="Panel" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.239
-anchor_top = 0.262
-anchor_right = 0.761
-anchor_bottom = 0.855
-offset_left = -0.328009
-offset_top = 0.223984
-offset_right = 0.327957
-offset_bottom = -0.0400124
+anchor_left = 0.123
+anchor_top = 0.207
+anchor_right = 0.877
+anchor_bottom = 0.91
+offset_left = 0.303996
+offset_top = -0.136011
+offset_right = -0.304039
+offset_bottom = 0.319983
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(301, 192)
@@ -238,39 +308,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="tutorialmenu"]
-visible = false
-modulate = Color(0, 0.572549, 1, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 21.0
-offset_top = 16.0
-offset_right = -21.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/table_odd_row_bg = Color(0, 0.572549, 1, 1)
-theme_override_colors/table_even_row_bg = Color(0, 0.572549, 1, 1)
-theme_override_colors/table_border = Color(0, 0.572549, 1, 1)
-theme_override_fonts/normal_font = ExtResource("3_1nyvw")
-theme_override_font_sizes/normal_font_size = 50
-text = "-CONTROLS-
-wasd - basic movement
-M1 (holdable) - shoot
-M2 - life shot
-
--OVERVIEW-
-fire your gun at the boss and try not to die. every time you kill a boss, you get nerfed but get an equally powerful buff.
-"
-
 [node name="Button" type="Button" parent="tutorialmenu"]
 modulate = Color(0, 0.572549, 1, 1)
 layout_mode = 0
-offset_left = 535.0
+offset_left = 793.0
 offset_top = -23.0
-offset_right = 632.0
+offset_right = 890.0
 offset_bottom = 74.0
 scale = Vector2(0.4, 0.4)
 pivot_offset = Vector2(48, 48)
@@ -281,6 +324,147 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_8apou")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_8apou")
 icon = ExtResource("7_lbv4t")
 script = ExtResource("8_22a50")
+
+[node name="Panel" type="Panel" parent="tutorialmenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.013
+anchor_right = 0.327
+anchor_bottom = 1.0
+offset_top = 5.928
+offset_right = 0.163981
+offset_bottom = -2.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_f8cct")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="tutorialmenu/Panel"]
+modulate = Color(0, 0.572549, 1, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 16.0
+offset_right = -5.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/table_odd_row_bg = Color(0, 0.572549, 1, 1)
+theme_override_colors/table_even_row_bg = Color(0, 0.572549, 1, 1)
+theme_override_colors/table_border = Color(0, 0.572549, 1, 1)
+theme_override_fonts/normal_font = ExtResource("3_1nyvw")
+theme_override_font_sizes/normal_font_size = 30
+text = "-CONTROLS-
+wasd - basic movement
+M1 (holdable) - shoot
+M2 - life shot
+
+-OVERVIEW-
+fire your gun at the boss and try not to die. every time you kill a boss, you get nerfed but get an equally powerful buff.
+
+-CHANGELOG-
+
+v1.2 - Glow Up Patch
+-More music :D
+-More Boss attacks
+-More Glowup
+
+
+v1.1 - Day 1 Patch
+-Fixed Some of the bosses moves
+-Added two new upgrades
+-Balancing changes
+-Two new upgrades :D
+-Boss has a shield
+-Settings for the guys on potato pc
+-Changelog
+
+v0.9 - Gaem Jaem :D
+-o.o
+-I don't want to talk about it
+
+
+-Credits-
+A lot of cool edm guys on youtube for the music :D
+@Arandompsi for player movement and boss ai
+@Kosm0-o for BOULETS and concepts
+"
+
+[node name="motionblurbutton" type="CheckButton" parent="tutorialmenu"]
+modulate = Color(0, 0.572549, 1, 1)
+layout_mode = 0
+offset_left = 302.0
+offset_top = 22.0
+offset_right = 585.0
+offset_bottom = 70.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_1nyvw")
+theme_override_font_sizes/font_size = 40
+text = "Motion Blur"
+
+[node name="fogbutton" type="CheckButton" parent="tutorialmenu"]
+modulate = Color(0, 0.572549, 1, 1)
+layout_mode = 0
+offset_left = 302.0
+offset_top = 70.0
+offset_right = 585.0
+offset_bottom = 118.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_1nyvw")
+theme_override_font_sizes/font_size = 40
+text = "Fog Effect"
+
+[node name="musictoggle" type="CheckButton" parent="tutorialmenu"]
+modulate = Color(0, 0.572549, 1, 1)
+layout_mode = 0
+offset_left = 302.0
+offset_top = 118.0
+offset_right = 585.0
+offset_bottom = 166.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_1nyvw")
+theme_override_font_sizes/font_size = 40
+text = "Sounds"
+
+[node name="ezhp" type="CheckButton" parent="tutorialmenu"]
+modulate = Color(0, 0.572549, 1, 1)
+layout_mode = 0
+offset_left = 302.0
+offset_top = 166.0
+offset_right = 585.0
+offset_bottom = 214.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_1nyvw")
+theme_override_font_sizes/font_size = 40
+text = "Ez Read Hp"
+
+[node name="ezhp2" type="CheckButton" parent="tutorialmenu"]
+modulate = Color(0, 0.572549, 1, 1)
+layout_mode = 0
+offset_left = 302.0
+offset_top = 214.0
+offset_right = 585.0
+offset_bottom = 262.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_1nyvw")
+theme_override_font_sizes/font_size = 40
+text = "Noise"
+
+[node name="reset" type="Button" parent="tutorialmenu"]
+layout_mode = 0
+offset_left = 302.0
+offset_top = 342.0
+offset_right = 585.0
+offset_bottom = 413.0
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0.572549, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.2, 0.654902, 1, 1)
+theme_override_colors/font_hover_color = Color(0.341176, 0.713726, 1, 1)
+theme_override_fonts/font = ExtResource("3_1nyvw")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_f8cct")
+theme_override_styles/hover = SubResource("StyleBoxFlat_58ecf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_f8cct")
+text = "Reset Score"
 
 [node name="transition" type="ColorRect" parent="."]
 visible = false
@@ -294,9 +478,20 @@ pivot_offset = Vector2(576, 2.08165e-12)
 color = Color(0, 0, 0, 1)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9_acsxh")
+stream = ExtResource("10_pce62")
 volume_db = -80.0
 autoplay = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="noise" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_q0liu")
+offset_left = -24.0
+offset_top = -59.0
+offset_right = 1272.0
+offset_bottom = 661.0
+mouse_filter = 2
+script = ExtResource("9_52k2h")
 
 [connection signal="pressed" from="play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="tutorial" to="." method="_on_tutorial_pressed"]
@@ -304,3 +499,9 @@ autoplay = true
 [connection signal="mouse_entered" from="tutorialmenu/Button" to="tutorialmenu/Button" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="tutorialmenu/Button" to="tutorialmenu/Button" method="_on_mouse_exited"]
 [connection signal="pressed" from="tutorialmenu/Button" to="." method="tutorialdissapear"]
+[connection signal="pressed" from="tutorialmenu/motionblurbutton" to="." method="_on_motionblurbutton_pressed"]
+[connection signal="pressed" from="tutorialmenu/fogbutton" to="." method="_on_fogbutton_pressed"]
+[connection signal="pressed" from="tutorialmenu/musictoggle" to="." method="_on_musictoggle_pressed"]
+[connection signal="pressed" from="tutorialmenu/ezhp" to="." method="_on_ezhp_pressed"]
+[connection signal="pressed" from="tutorialmenu/ezhp2" to="." method="_on_ezhp_2_pressed"]
+[connection signal="pressed" from="tutorialmenu/reset" to="." method="_on_reset_pressed"]

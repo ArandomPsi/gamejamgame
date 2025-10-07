@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://q1p83m65csqi"]
+[gd_scene load_steps=37 format=3 uid="uid://q1p83m65csqi"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_73xae"]
 [ext_resource type="Texture2D" uid="uid://cqcu6uhfjqrlh" path="res://assets/player2.svg" id="1_rbex6"]
@@ -9,10 +9,13 @@
 [ext_resource type="Script" path="res://scripts/nerfbutton.gd" id="6_sd6k2"]
 [ext_resource type="FontFile" uid="uid://b8py65jnbfyky" path="res://fonts/TrenchThin-aZ1J.ttf" id="7_hbqsi"]
 [ext_resource type="Texture2D" uid="uid://dxycw1h2ku3y8" path="res://assets/glass3-2.svg" id="8_v8cul"]
+[ext_resource type="Shader" path="res://shaders/blur.gdshader" id="9_0hbbd"]
 [ext_resource type="Shader" path="res://shaders/motionblur.gdshader" id="9_v5r53"]
 [ext_resource type="Script" path="res://shaders/motionblur.gd" id="10_mcj7j"]
+[ext_resource type="Shader" path="res://shaders/thecutscene.gdshader" id="10_wege0"]
 [ext_resource type="AudioStream" uid="uid://dr77g8eeymxrt" path="res://sounds/Hinkik - Skystrike [Bass Boosted - HQ].mp3" id="12_hvxjs"]
-[ext_resource type="AudioStream" uid="uid://cuafldbntboot" path="res://sounds/collide.wav" id="13_gpa1n"]
+[ext_resource type="AudioStream" uid="uid://c2aghvs105pac" path="res://sounds/boom.mp3" id="14_kawu1"]
+[ext_resource type="Script" path="res://scripts/noise.gd" id="16_8rc0m"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_pimyr"]
 noise_type = 4
@@ -32,8 +35,8 @@ shader_parameter/size_2 = 0.05
 shader_parameter/layer_3 = Color(0.560784, 0.764706, 1, 1)
 shader_parameter/size_3 = 0.05
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7c4w"]
-bg_color = Color(0, 0, 0, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gu8om"]
+bg_color = Color(0, 0, 0, 0)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
@@ -41,7 +44,12 @@ border_width_bottom = 5
 border_color = Color(0.341176, 0.431373, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fjaov"]
-bg_color = Color(0, 0, 0.145098, 1)
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.356863, 0.431373, 0.964706, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g3x0p"]
 bg_color = Color(0, 0, 0.145098, 1)
@@ -50,6 +58,12 @@ border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.521569, 0.54902, 0.929412, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3vj40"]
+shader = ExtResource("9_0hbbd")
+shader_parameter/samples = 35
+shader_parameter/lod = 2
+shader_parameter/tint_color = Color(0, 0, 0, 0.466667)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jgx2o"]
 shader = ExtResource("5_eybdo")
@@ -61,6 +75,29 @@ shader_parameter/layer_2 = Color(0, 0.666667, 1, 1)
 shader_parameter/size_2 = 0.05
 shader_parameter/layer_3 = Color(0.560784, 0.764706, 1, 1)
 shader_parameter/size_3 = 0.05
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7c4w"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.341176, 0.431373, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_edwqm"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.341176, 0.431373, 1, 1)
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qqhfd"]
+bg_color = Color(0.356863, 0.431373, 0.964706, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c504b"]
 shader = ExtResource("9_v5r53")
@@ -102,7 +139,7 @@ anim_offset_max = 1.0
 
 [sub_resource type="Animation" id="Animation_cmv6a"]
 resource_name = "diecutscene"
-length = 2.0
+length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -183,6 +220,10 @@ _data = {
 "diecutscene": SubResource("Animation_cmv6a")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_00rap"]
+shader = ExtResource("10_wege0")
+shader_parameter/noise_intensity = 0.053
+
 [node name="player" type="Node2D"]
 script = ExtResource("1_73xae")
 
@@ -253,7 +294,7 @@ offset_right = -0.224014
 offset_bottom = -0.192036
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_h7c4w")
+theme_override_styles/panel = SubResource("StyleBoxFlat_gu8om")
 
 [node name="Label" type="Label" parent="hud/nerfs"]
 use_parent_material = true
@@ -303,6 +344,7 @@ offset_right = 157.0
 offset_bottom = 55.0
 grow_vertical = 2
 focus_mode = 0
+theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
 theme_override_fonts/font = ExtResource("7_hbqsi")
 theme_override_font_sizes/font_size = 12
 theme_override_styles/normal = SubResource("StyleBoxFlat_fjaov")
@@ -324,6 +366,7 @@ offset_bottom = 55.0
 grow_horizontal = 0
 grow_vertical = 2
 focus_mode = 0
+theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
 theme_override_fonts/font = ExtResource("7_hbqsi")
 theme_override_font_sizes/font_size = 12
 theme_override_styles/normal = SubResource("StyleBoxFlat_fjaov")
@@ -345,11 +388,23 @@ offset_bottom = 55.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
 theme_override_fonts/font = ExtResource("7_hbqsi")
 theme_override_font_sizes/font_size = 12
 theme_override_styles/normal = SubResource("StyleBoxFlat_fjaov")
 theme_override_styles/hover = SubResource("StyleBoxFlat_g3x0p")
 script = ExtResource("6_sd6k2")
+
+[node name="blur" type="ColorRect" parent="hud/nerfs"]
+show_behind_parent = true
+material = SubResource("ShaderMaterial_3vj40")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="score" type="Label" parent="hud"]
 offset_left = 21.0
@@ -365,14 +420,14 @@ vertical_alignment = 1
 visible = false
 material = SubResource("ShaderMaterial_jgx2o")
 anchors_preset = -1
-anchor_left = 0.315
-anchor_top = 0.292
+anchor_left = 0.312
+anchor_top = 0.039
 anchor_right = 0.688
-anchor_bottom = 0.557
-offset_left = -3.88
-offset_top = -164.216
+anchor_bottom = 0.228
+offset_left = -0.424007
+offset_top = -0.272006
 offset_right = 0.423973
-offset_bottom = -212.936
+offset_bottom = 0.255975
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_h7c4w")
@@ -388,12 +443,23 @@ offset_top = 13.0
 offset_right = 182.0
 offset_bottom = 102.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0.615686, 1, 1)
+theme_override_colors/font_color = Color(0.235294, 1, 0, 1)
 theme_override_fonts/font = ExtResource("7_hbqsi")
 theme_override_font_sizes/font_size = 40
 text = "The Buff"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="blur" type="ColorRect" parent="hud/buffmessage"]
+show_behind_parent = true
+material = SubResource("ShaderMaterial_3vj40")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="transition" type="ColorRect" parent="hud"]
 visible = false
@@ -404,6 +470,27 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(576, 2.08165e-12)
 color = Color(0, 0, 0, 1)
+
+[node name="ezhpbar" type="ProgressBar" parent="hud"]
+offset_left = 21.0
+offset_top = 47.0
+offset_right = 299.0
+offset_bottom = 62.0
+theme_override_styles/background = SubResource("StyleBoxFlat_edwqm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qqhfd")
+value = 50.0
+show_percentage = false
+
+[node name="blur" type="ColorRect" parent="hud/ezhpbar"]
+show_behind_parent = true
+material = SubResource("ShaderMaterial_3vj40")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="hud2" type="CanvasLayer" parent="."]
 layer = 2
@@ -445,14 +532,27 @@ autoplay = true
 bus = &"music"
 
 [node name="hit" type="AudioStreamPlayer" parent="music"]
-stream = ExtResource("13_gpa1n")
-volume_db = -2.0
-bus = &"reverb"
+stream = ExtResource("14_kawu1")
+volume_db = -5.0
+pitch_scale = 1.76
+mix_target = 1
+max_polyphony = 10
 
 [node name="cutscenes" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_uftgi")
 }
+
+[node name="noise" type="CanvasLayer" parent="."]
+
+[node name="noise" type="ColorRect" parent="noise"]
+material = SubResource("ShaderMaterial_00rap")
+offset_left = -24.0
+offset_top = -59.0
+offset_right = 1272.0
+offset_bottom = 661.0
+mouse_filter = 2
+script = ExtResource("16_8rc0m")
 
 [connection signal="timeout" from="shotcooldown" to="." method="_on_shotcooldown_timeout"]
 [connection signal="pressed" from="hud/nerfs/nerf1" to="." method="_on_nerf_1_pressed"]

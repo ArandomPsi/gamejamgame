@@ -6,6 +6,7 @@ var bbullets : bool = false
 var brange : int = 120
 var attack : int = 1
 var bulletspeed : int = 700
+var homing : float = 0.00
 
 var bullettime : int = 0
 
@@ -20,11 +21,14 @@ func _process(delta):
 		$Sprite2D.rotation_degrees += 15
 		bulletspeed -= 7
 	
+	var v = (global.bosspos - position).angle()
+	rotation = lerp_angle(rotation,v,homing)
 	
 	position += bulletspeed * transform.x * delta
 	
 	if bullettime > brange:
 		twintowers()
+	
 	
 	
 

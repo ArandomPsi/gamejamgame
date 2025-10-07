@@ -12,9 +12,12 @@ config_version=5
 
 config/name="Zero Sum"
 config/description="Game Jam Game"
-config/version="1.0"
+config/version="1.1"
 run/main_scene="res://scenes/thecutscene.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/image="res://icon-2.png"
+boot_splash/fullsize=false
 config/icon="res://icon-2.svg"
 config/macos_native_icon="res://icon-2.svg"
 config/windows_native_icon="res://icon-2.png"

@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bcl3f38urqdwb"]
+[gd_scene load_steps=12 format=3 uid="uid://bcl3f38urqdwb"]
 
 [ext_resource type="PackedScene" uid="uid://q1p83m65csqi" path="res://scenes/player.tscn" id="1_1m3md"]
 [ext_resource type="PackedScene" uid="uid://0r1taiqlu3bc" path="res://scenes/boss.tscn" id="2_bas30"]
 [ext_resource type="Shader" path="res://shaders/fog.gdshader" id="3_utokx"]
+[ext_resource type="Script" path="res://scripts/fog.gd" id="4_q7rmp"]
 
 [sub_resource type="Gradient" id="Gradient_hr8sd"]
 offsets = PackedFloat32Array(0, 0.757463)
@@ -109,3 +110,4 @@ offset_top = -8.0
 offset_right = 1181.0
 offset_bottom = 687.0
 mouse_filter = 2
+script = ExtResource("4_q7rmp")

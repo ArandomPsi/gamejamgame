@@ -4,6 +4,7 @@ func _ready():
 	visible = true
 
 func _process(delta):
+	visible = global.motionblur
 	accumulation_motion_blur_shader(material)
 
 

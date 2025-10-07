@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var brange : int = 300
-@export var bulletspeed : int = 600
+@export var bulletspeed : int = 1200
 @export var bigboi : bool = true
 
 var bullettime : int = 0
@@ -16,7 +16,7 @@ func _process(delta):
 	position += transform.x * bulletspeed * delta
 	
 	rotation_degrees += (rotaspeed * delta) * rotadir
-	rotaspeed -= 3
+	rotaspeed -= 10
 	
 	if bullettime > brange:
 		twintowers()

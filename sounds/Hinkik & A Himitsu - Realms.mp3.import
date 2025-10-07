@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dx2dca8d3edy2"
+path="res://.godot/imported/Hinkik & A Himitsu - Realms.mp3-5dc71b3d3757b5dd41cfb1f2e7b2dd3a.mp3str"
+
+[deps]
+
+source_file="res://sounds/Hinkik & A Himitsu - Realms.mp3"
+dest_files=["res://.godot/imported/Hinkik & A Himitsu - Realms.mp3-5dc71b3d3757b5dd41cfb1f2e7b2dd3a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

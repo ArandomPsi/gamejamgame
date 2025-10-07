@@ -8,6 +8,16 @@ var highscore : int = 0
 
 var save_path := "user://Zer0-SumHS.save"
 
+var bosspos : Vector2
+
+var sounds : bool = true
+var fog : bool = true
+var motionblur : bool = true
+var ezhp : bool = false
+var noise : bool = true
+
+func _process(delta):
+	AudioServer.set_bus_mute(0,not sounds)
 
 func save_highscore():
 	var file = FileAccess.open(save_path, FileAccess.WRITE)
